@@ -1,6 +1,10 @@
-﻿namespace TglCA.Dal.Interfaces.IUnitOfWork;
+﻿using Microsoft.EntityFrameworkCore;
 
-public interface IUnitOfWork
+namespace TglCA.Dal.Interfaces.IUnitOfWork;
+
+public interface IUnitOfWork : IDisposable
 {
-    
+    DbContext Context { get; }
+
+    void Commit();
 }
