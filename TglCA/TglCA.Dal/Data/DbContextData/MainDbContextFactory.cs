@@ -10,7 +10,8 @@ namespace TglCA.Dal.Data.DbContextData
             var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
 
             //Must be updated
-            var connectionString = "";
+            var connectionString =
+                @"Server=localhost; Database=TglCA_Db; TrustServerCertificate=True; Trusted_Connection=true";
 
             optionsBuilder.UseSqlServer(connectionString);
             return new MainDbContext(optionsBuilder.Options);
