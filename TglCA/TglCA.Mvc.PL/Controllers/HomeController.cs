@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Mvc.PL.Models;
 
 namespace TglCA.Mvc.PL.Controllers
@@ -8,12 +10,12 @@ namespace TglCA.Mvc.PL.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<User> userService, ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }

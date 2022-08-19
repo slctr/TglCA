@@ -12,4 +12,8 @@
     <ProjectReference Include="..\TglCA.Dal.Interfaces\TglCA.Dal.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identity\" />
+  </ItemGroup>
+
 </Project>

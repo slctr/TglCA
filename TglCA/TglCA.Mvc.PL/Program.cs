@@ -1,9 +1,27 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using TglCA.Dal.Data.DbContextData;
+using TglCA.Dal.Interfaces.Entities.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("Default");
+
+#region Services
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MainDbContext>(options 
+    => options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<User,Role>()
+    .AddEntityFrameworkStores<MainDbContext>();
+
+#endregion
+
 
 var app = builder.Build();
+
+#region HTTP pipeline
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -23,5 +41,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+#endregion
+
 
 app.Run();
