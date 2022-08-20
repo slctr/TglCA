@@ -1,0 +1,21 @@
+﻿@using TglCA.Dal.Interfaces.Entities.Identity
+@model User
+
+<div class="form-group">
+    <label asp-for="Email" class="col-form-label"></label>
+    <div >
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group">
+    <a>Password</a>
+    <div >
+        <input class="form-control me-2" type="password" placeholder="Password" aria-label="Password" name="password">
+    </div>
+</div>
+<div class="row">
+    <div class="d-grid gap-2">
+        <input class="btn btn-success" type="submit" value="Register" style="margin-top:6px;"/>
+    </div>
+</div>

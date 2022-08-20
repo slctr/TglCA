@@ -1,0 +1,6 @@
+﻿@using TglCA.Dal.Interfaces.Entities.Identity
+@model User
+<div class="alert alert-danger">@TempData["error"]</div>
+<form asp-action="Register" method="post" class="formhorizontal">
+    @Html.EditorForModel()
+</form>
