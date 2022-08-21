@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
 
@@ -11,9 +10,23 @@ var connectionString = builder.Configuration.GetConnectionString("Default");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MainDbContext>(options 
+builder.Services.AddDbContext<MainDbContext>(options
     => options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<User,Role>()
+builder.Services.AddIdentity<User, Role>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+
+        #region Password options
+
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequiredLength = 6;
+        options.Password.RequiredUniqueChars = 1;
+
+        #endregion
+    })
     .AddEntityFrameworkStores<MainDbContext>();
 
 #endregion
@@ -35,12 +48,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 #endregion
 

@@ -1,49 +1,49 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TglCA.Dal.Interfaces.Entities.Identity;
+using TglCA.Mvc.PL.Models;
 
-namespace TglCA.Mvc.PL.Controllers
+namespace TglCA.Mvc.PL.Controllers;
+
+[Route("/[controller]/[action]")]
+public class AccountController : Controller
 {
-    [Route("/[controller]/[action]")]
-    public class AccountController : Controller
+    private readonly UserManager<User> _userManager;
+
+    public AccountController(UserManager<User> userManager)
     {
-        private readonly UserManager<User> _userManager;
+        _userManager = userManager;
+    }
 
-        public AccountController(UserManager<User> userManager)
+    [HttpGet]
+    public IActionResult Successful()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async ValueTask<IActionResult> Register(RegistrationModel registrationModel)
+    {
+        if (!ModelState.IsValid) return View(registrationModel);
+
+        var user = new User
         {
-            _userManager = userManager;
+            Email = registrationModel.Email
+        };
+        user.UserName = user.Email.Substring(0, user.Email.IndexOf('@'));
+        var result = await _userManager.CreateAsync(user, registrationModel.Password);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+            return View(registrationModel);
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        //Only for TESTING purposes. Should be reworked
-        [HttpPost]
-        public async Task<IActionResult> Register(User user,string password)
-        {
-            if (user.Email == null)
-            {
-                TempData["error"] = "Email is null!!";
-                return View();
-            }
-            if (password == null)
-            {
-                TempData["error"] = "Password is null!!";
-                return View();
-            }
-            user.UserName = user.Email.Substring(0, user.Email.IndexOf('@'));
-            var result = await _userManager.CreateAsync(user, password);
-            if (!result.Succeeded)
-            {
-                foreach (IdentityError error in result.Errors)
-                {
-                    TempData["error"] += error.Description + "||";
-                }
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
-        }
+        return RedirectToAction(nameof(Successful));
     }
 }
