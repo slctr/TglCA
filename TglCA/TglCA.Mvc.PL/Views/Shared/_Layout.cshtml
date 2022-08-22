@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using TglCA.Dal.Interfaces.Entities.Identity
+@inject SignInManager<User> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,9 +27,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Sign up", "Register", "Account", null, new { @class="btn btn-outline-success" })
-                        </li>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("SignUp", "Register", "Account", null, new { @class="btn btn-outline-success" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("SignIn", "Login", "Account", null, new { @class="btn btn-outline-success" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a>User: @User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("SignOut", "LogOut", "Account", null, new { @class="btn btn-outline-danger" })
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>

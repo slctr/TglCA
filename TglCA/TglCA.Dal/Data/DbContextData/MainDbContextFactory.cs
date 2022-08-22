@@ -18,7 +18,6 @@ namespace TglCA.Dal.Data.DbContextData
         {
             var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
 
-            //Must be updated
             var connectionString = _configuration.GetConnectionString("Default");
 
             optionsBuilder.UseSqlServer(connectionString);
