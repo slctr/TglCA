@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "Default": "Server=localhost; Database=TglCA_Db; TrustServerCertificate=True; Trusted_Connection=true"
+  }
+}

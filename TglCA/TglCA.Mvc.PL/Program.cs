@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
@@ -14,16 +15,35 @@ builder.Services.AddDbContext<MainDbContext>(options
     => options.UseSqlServer(connectionString));
 builder.Services.AddIdentity<User, Role>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false;
-
         #region Password options
 
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireNonAlphanumeric = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequiredLength = 6;
-        options.Password.RequiredUniqueChars = 1;
+        options.Password = builder.Configuration
+            .GetSection("AppIdentitySettings:Password")
+            .Get<PasswordOptions>();
+
+        #endregion
+
+        #region Lockout options
+
+        options.Lockout = builder.Configuration
+            .GetSection("AppIdentitySettings:Lockout")
+            .Get<LockoutOptions>();
+
+        #endregion
+
+        #region User options
+
+        options.User = builder.Configuration
+            .GetSection("AppIdentitySettings:User")
+            .Get<UserOptions>();
+
+        #endregion
+
+        #region SignIn options
+
+        options.SignIn = builder.Configuration
+            .GetSection("AppIdentitySettings:SignIn")
+            .Get<SignInOptions>();
 
         #endregion
     })
