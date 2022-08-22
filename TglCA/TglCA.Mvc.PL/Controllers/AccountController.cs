@@ -28,20 +28,20 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async ValueTask<IActionResult> Register(RegistrationModel registrationModel)
+    public async ValueTask<IActionResult> Register(UserInputModel userInputModel)
     {
-        if (!ModelState.IsValid) return View(registrationModel);
+        if (!ModelState.IsValid) return View(userInputModel);
 
         var user = new User
         {
-            Email = registrationModel.Email
+            Email = userInputModel.Email
         };
-        user.UserName = user.Email.Substring(0, user.Email.IndexOf('@'));
-        var result = await _userManager.CreateAsync(user, registrationModel.Password);
+        user.UserName = userInputModel.UserName;
+        var result = await _userManager.CreateAsync(user, userInputModel.Password);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
-            return View(registrationModel);
+            return View(userInputModel);
         }
 
         return RedirectToAction(nameof(Successful));
