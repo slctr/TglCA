@@ -60,8 +60,17 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid) return View(userInputModel);
 
+        User user = await _userManager.FindByEmailAsync(userInputModel.Email);
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
+            return View(userInputModel);
+        }
+
+        await _signInManager.SignOutAsync();
+
         var result =
-            await _signInManager.PasswordSignInAsync(userInputModel.UserName, userInputModel.Password, false, true);
+            await _signInManager.PasswordSignInAsync(user, userInputModel.Password, false, true);
 
         if (!result.Succeeded)
         {
