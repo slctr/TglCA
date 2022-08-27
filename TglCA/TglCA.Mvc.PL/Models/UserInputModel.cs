@@ -18,6 +18,7 @@ namespace TglCA.Mvc.PL.Models
 
         private string GetUserName()
         {
+            if (Email == null) return string.Empty;
             Span<char> emailSpan = new Span<char>(Email.ToCharArray());
             return emailSpan.Slice(0, emailSpan.IndexOf("@")).ToString();
         }

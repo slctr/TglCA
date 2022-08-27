@@ -8,11 +8,13 @@ namespace TglCA.Mvc.PL.Controllers;
 [Route("/[controller]/[action]")]
 public class AccountController : Controller
 {
+    private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
 
-    public AccountController(UserManager<User> userManager)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     [HttpGet]
@@ -34,9 +36,9 @@ public class AccountController : Controller
 
         var user = new User
         {
-            Email = userInputModel.Email
+            Email = userInputModel.Email,
+            UserName = userInputModel.UserName
         };
-        user.UserName = userInputModel.UserName;
         var result = await _userManager.CreateAsync(user, userInputModel.Password);
         if (!result.Succeeded)
         {
@@ -45,5 +47,43 @@ public class AccountController : Controller
         }
 
         return RedirectToAction(nameof(Successful));
+    }
+
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async ValueTask<IActionResult> Login(UserInputModel userInputModel)
+    {
+        if (!ModelState.IsValid) return View(userInputModel);
+
+        User user = await _userManager.FindByEmailAsync(userInputModel.Email);
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
+            return View(userInputModel);
+        }
+
+        await _signInManager.SignOutAsync();
+
+        var result =
+            await _signInManager.PasswordSignInAsync(user, userInputModel.Password, false, true);
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
+            return View(userInputModel);
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    public async ValueTask<IActionResult> LogOut()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }
