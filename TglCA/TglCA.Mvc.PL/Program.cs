@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
@@ -49,6 +50,13 @@ builder.Services.AddIdentity<User, Role>(options =>
     })
     .AddEntityFrameworkStores<MainDbContext>();
 
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    }
+);
 #endregion
 
 
