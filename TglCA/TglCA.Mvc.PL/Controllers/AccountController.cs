@@ -13,7 +13,7 @@ public class AccountController : Controller
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
 
-    
+
 
     public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
     {
@@ -102,41 +102,41 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> GoogleResponse()
     {
-        ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+        var info = await _signInManager.GetExternalLoginInfoAsync();
         if (info == null)
 
             return RedirectToAction(nameof(Login));
 
         var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
         string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", string.Empty), info.Principal.FindFirst(ClaimTypes.Email).Value };
+        
         if (result.Succeeded)
         {
             return RedirectToAction("Index", "Home");
         }
-        else
+
+        var user = new User
         {
-            var user = new User
-            {
-                Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
-                UserName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", string.Empty)
-            };
+            Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+            UserName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", string.Empty)
+        };
 
-            IdentityResult identityResult = await _userManager.CreateAsync(user);
+        var identityResult = await _userManager.CreateAsync(user);
 
-            if (!identityResult.Succeeded)
-            {
-                ModelState.AddModelError(string.Empty, "Something went wrong!");
-                return RedirectToAction("Login", "Account");
-            }
-
-            identityResult = await _userManager.AddLoginAsync(user, info);
-
-            if (identityResult.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-            }
-            return RedirectToAction("Index", "Home");
+        if (!identityResult.Succeeded)
+        {
+            return RedirectToAction("Login", "Account");
         }
+
+        identityResult = await _userManager.AddLoginAsync(user, info);
+
+        if (identityResult.Succeeded)
+        {
+            await _signInManager.SignInAsync(user, isPersistent: false);
+        }
+
+        return RedirectToAction("Index", "Home");
+
     }
 
 }
