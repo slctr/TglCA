@@ -78,12 +78,12 @@ public class AccountController : Controller
             return View(userInputModel);
         }
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Main");
     }
 
     public async ValueTask<IActionResult> LogOut()
     {
         await _signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Main");
     }
 }
