@@ -48,14 +48,14 @@
                     </td>
                     <td>
                         <div class="tableContentContainer">
-                            <p class="tableText">@Model[i].Price</p>
+                            <p class="tableText">$@Model[i].Price</p>
                         </div>
                     </td>
                     @if (@Model[i].PercentChange1h < 0)
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-danger">@Model[i].PercentChange1h</p>
+                                <p class="tableText text-danger">@Model[i].PercentChange1h%</p>
                             </div>
                         </td>
                     }
@@ -63,7 +63,7 @@
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-success">@Model[i].PercentChange1h</p>
+                                <p class="tableText text-success">@Model[i].PercentChange1h%</p>
                             </div>
                         </td>
                     }
@@ -71,7 +71,7 @@
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-danger">@Model[i].PercentChange24h</p>
+                                <p class="tableText text-danger">@Model[i].PercentChange24h%</p>
                             </div>
                         </td>
                     }
@@ -79,7 +79,7 @@
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-success">@Model[i].PercentChange24h</p>
+                                <p class="tableText text-success">@Model[i].PercentChange24h%</p>
                             </div>
                         </td>
                     }
@@ -87,7 +87,7 @@
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-danger">@Model[i].PercentChange7d</p>
+                                <p class="tableText text-danger">@Model[i].PercentChange7d%</p>
                             </div>
                         </td>
                     }
@@ -95,18 +95,18 @@
                     {
                         <td>
                             <div class="tableContentContainer">
-                                <p class="tableText text-success">@Model[i].PercentChange7d</p>
+                                <p class="tableText text-success">@Model[i].PercentChange7d%</p>
                             </div>
                         </td>
                     }
                     <td>
                         <div class="tableContentContainer">
-                            <p class="tableText">@Model[i].Volume24hUsd</p>
+                            <p class="tableText">$@Model[i].Volume24hUsd</p>
                         </div>
                     </td>
                     <td>
                         <div class="tableContentContainer">
-                            <p class="tableText">@Model[i].MarketCapUsd</p>
+                            <p class="tableText">$@Model[i].MarketCapUsd</p>
                         </div>
                     </td>
                 </tr>
