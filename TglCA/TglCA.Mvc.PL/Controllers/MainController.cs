@@ -1,15 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TglCA.Bll.Interfaces.IServices;
+using TglCA.Dal.Interfaces.IRepositories;
+using TglCA.Mvc.PL.Models.Mappers;
 
 namespace TglCA.Mvc.PL.Controllers
 {
-    [Route("/")]
+    
     [Route("/[controller]")]
     [Route("/[controller]/[action]")]
     public class MainController : Controller
     {
-        public IActionResult Index()
+        private ICurrencyService _currencyService;
+
+        public MainController(ICurrencyService service)
         {
-            return View();
+            _currencyService = service;
+        }
+        [Route("/")]
+        [HttpGet]
+        public IActionResult ByMarketCap()
+        {
+            return View(_currencyService.GetAllByMarketCap().ToViewModels().ToList());
         }
     }
 }

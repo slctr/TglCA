@@ -78,12 +78,12 @@ public class AccountController : Controller
             return View(userInputModel);
         }
 
-        return RedirectToAction("Index", "Main");
+        return RedirectToAction("ByMarketCap", "Main");
     }
 
     public async ValueTask<IActionResult> LogOut()
     {
         await _signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Main");
+        return RedirectToAction("ByMarketCap", "Main");
     }
 }

@@ -12,7 +12,21 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+table,
+thead,
+tr,
+tbody,
+th,
+td {
+    text-align: center;
+}
+thead {
+    border-bottom: #dee2e6 1px solid;
+    border-top: #dee2e6 1px solid
+}
+tr {
+    border-bottom: #dee2e6 1px solid;
+}
 .navButton {
     text-decoration: none;
     color: black;
@@ -27,9 +41,34 @@ html {
     display: block;
     margin-top: 0;
 }
+.symbolText {
+    color: gray;
+    margin-left: 5px;
+    font-size: x-small;
+}
+.coinIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 1rem; 
+}
+#tableContentCoinContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.tableContentContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+}
+.tableText {
+    margin-bottom: 0;
+}
 #logoHeader {
     color:black 
 }
-#mainFlex {
-    min-height: 85vh;
+#tableContainer {
+    min-width: 95vw;
 }

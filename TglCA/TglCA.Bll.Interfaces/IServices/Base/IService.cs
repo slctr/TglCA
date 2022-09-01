@@ -1,15 +1,12 @@
-﻿using TglCA.Dal.Interfaces.Entities.Base;
+﻿using TglCA.Bll.Interfaces.Entities.Base;
 
-namespace TglCA.Dal.Interfaces.IRepositories.IBase;
+namespace TglCA.Bll.Interfaces.IServices.Base;
 
-public interface IRepository<T> where T : BaseEntity, new()
+public interface IService<T> where T : BllEntityBase
 {
-
     public void Create(T entity);
     public void Update(T entity);
     public void Delete(T entity);
     public T GetById(int id);
     public IEnumerable<T> GetAll();
-
-
 }

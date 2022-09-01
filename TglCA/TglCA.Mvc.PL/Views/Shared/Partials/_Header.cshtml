@@ -13,7 +13,7 @@
                         Cryptocurrencies
                     </div>
                     <div class="dropdown-menu text-center" aria-labelledby="dropdownCryptocurrencies">
-                        <a class="dropdown-item" href="#">By Market Cap</a>
+                        @Html.ActionLink("By Market Cap", "ByMarketCap", "Main", null, new { @class = "dropdown-item" })
                         <a class="dropdown-item" href="#">All coins</a>
                     </div>
                 </div>
