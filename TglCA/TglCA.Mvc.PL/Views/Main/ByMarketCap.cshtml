@@ -1,10 +1,10 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using TglCA.Mvc.PL.Views.Shared
+﻿@using TglCA.Mvc.PL.Views.Shared
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IPagedList<CurrencyViewModel>
 <div id="infoContainer">
     <h3 class="mt-1">Cryptocurrency Prices by Market Cap</h3>
 </div>
 <partial name="Partials/_BasicCoinsTablePartial" model="@Model"/>
-@Html.PagedListPager(Model, page => Url.Action("ByMarketCap", 
-        new { page }),
-        PagedListOptions.options)
+@Html.PagedListPager(Model, page => Url.Action("ByMarketCap",
+    new { page }),
+    PagedListOptions.options)

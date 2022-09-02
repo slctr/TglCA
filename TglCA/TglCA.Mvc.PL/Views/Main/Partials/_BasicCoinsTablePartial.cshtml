@@ -31,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        @for(int i = 0; i < @Model.Count(); ++i)
+        @for (var i = 0; i < Model.Count(); ++i)
         {
             <tr>
                 <td>
@@ -41,8 +41,8 @@
                 </td>
                 <td>
                     <div id="tableContentCoinContainer">
-                        <img class="coinIcon" src="@Model[i].GetImageSrc()" />
-                        @Html.ActionLink(@Model[i].Name, "CoinPage", "Coin", null, new { @class = "navButton" })
+                        <img class="coinIcon" src="@Model[i].GetImageSrc()"/>
+                        @Html.ActionLink(Model[i].Name, "CoinPage", "Coin", null, new { @class = "navButton" })
                         <p class="symbolText">@Model[i].Symbol</p>
                     </div>
                 </td>
@@ -51,7 +51,7 @@
                         <p class="tableText">$@Model[i].Price</p>
                     </div>
                 </td>
-                @if (@Model[i].PercentChange1h < 0)
+                @if (Model[i].PercentChange1h < 0)
                 {
                     <td>
                         <div class="tableContentContainer">
@@ -67,7 +67,7 @@
                         </div>
                     </td>
                 }
-                @if (@Model[i].PercentChange24h < 0)
+                @if (Model[i].PercentChange24h < 0)
                 {
                     <td>
                         <div class="tableContentContainer">
@@ -83,7 +83,7 @@
                         </div>
                     </td>
                 }
-                @if (@Model[i].PercentChange7d < 0)
+                @if (Model[i].PercentChange7d < 0)
                 {
                     <td>
                         <div class="tableContentContainer">

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TglCA.Dal.Interfaces.Entities.Identity
+namespace TglCA.Dal.Interfaces.Entities.Identity;
+
+public class UserToken : IdentityUserToken<int>
 {
-    public class UserToken : IdentityUserToken<int>
-    {
-    }
 }

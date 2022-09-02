@@ -1,30 +1,31 @@
-﻿
-using TglCA.Bll.Interfaces.Entities;
+﻿using TglCA.Bll.Interfaces.Entities;
 using TglCA.Dal.Interfaces.Entities;
 
-namespace TglCA.Bll.Mappers
+namespace TglCA.Bll.Mappers;
+
+internal static class CurrencyMapperExtension
 {
-    internal static class CurrencyMapperExtension
+    public static BllCurrency ToBllCurrency(this Currency currency)
     {
-        public static BllCurrency ToBllCurrency(this Currency currency)
+        return new BllCurrency
         {
-            return new BllCurrency
-            {
-                Id = currency.Id,
-                Name = currency.Name,
-                CurrencyId = currency.CurrencyId,
-                Symbol = currency.Symbol
-            };
-        }
-        public static Currency ToCurrency(this BllCurrency bllCurrency)
+            Id = currency.Id,
+            Name = currency.Name,
+            CurrencyId = currency.CurrencyId,
+            Symbol = currency.Symbol,
+            Img = currency.Img
+        };
+    }
+
+    public static Currency ToCurrency(this BllCurrency bllCurrency)
+    {
+        return new Currency
         {
-            return new Currency
-            {
-                Id = bllCurrency.Id,
-                Name = bllCurrency.Name,
-                CurrencyId = bllCurrency.CurrencyId,
-                Symbol = bllCurrency.Symbol
-            };
-        }
+            Id = bllCurrency.Id,
+            Name = bllCurrency.Name,
+            CurrencyId = bllCurrency.CurrencyId,
+            Symbol = bllCurrency.Symbol,
+            Img = bllCurrency.Img
+        };
     }
 }

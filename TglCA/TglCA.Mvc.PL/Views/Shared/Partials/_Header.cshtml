@@ -1,24 +1,24 @@
 ﻿@using TglCA.Dal.Interfaces.Entities.Identity
 @inject SignInManager<User> SignInManager
 <div class="d-flex flex-row justify-content-between p-3 border-bottom" id="mainHeaderContainer">
-        <div class="d-flex flex-row align-items-center">
-          <div id="logoContainer">
+    <div class="d-flex flex-row align-items-center">
+        <div id="logoContainer">
             <a class="text-decoration-none" id="logoHeader" href="/">
                 <h1>E-Crypto</h1>
             </a>
-          </div>
-            <div class="d-flex" id="navBarItems">
-                <div class="dropdown ms-2" id="navCryptocurrencies">
-                    <div class="navButton" href="#" id="dropdownCryptocurrencies" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Cryptocurrencies
-                    </div>
-                    <div class="dropdown-menu text-center" aria-labelledby="dropdownCryptocurrencies">
-                        @Html.ActionLink("By Market Cap", "ByMarketCap", "Main", null, new { @class = "dropdown-item" })
-                        <a class="dropdown-item" href="#">All coins</a>
-                    </div>
+        </div>
+        <div class="d-flex" id="navBarItems">
+            <div class="dropdown ms-2" id="navCryptocurrencies">
+                <div class="navButton" href="#" id="dropdownCryptocurrencies" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cryptocurrencies
+                </div>
+                <div class="dropdown-menu text-center" aria-labelledby="dropdownCryptocurrencies">
+                    @Html.ActionLink("By Market Cap", "ByMarketCap", "Main", null, new { @class = "dropdown-item" })
+                    <a class="dropdown-item" href="#">All coins</a>
                 </div>
             </div>
         </div>
+    </div>
     <div class="d-flex flex-row align-items-center" id="accountContainer">
         @if (!SignInManager.IsSignedIn(User))
         {
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="ms-3" id="navAccountName">
-                <div class="btn btn-outline-dark disabled">User: @User.Identity.Name</div> 
+                <div class="btn btn-outline-dark disabled">User: @User.Identity.Name</div>
             </div>
         }
     </div>

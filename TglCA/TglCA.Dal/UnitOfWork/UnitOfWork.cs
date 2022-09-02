@@ -1,40 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TglCA.Dal.Interfaces.IUnitOfWork;
 
-namespace TglCA.Dal.UnitOfWork
+namespace TglCA.Dal.UnitOfWork;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public UnitOfWork(DbContext context)
     {
-        public DbContext Context { get; private set; }
+        Context = context;
+    }
 
-        public UnitOfWork(DbContext context)
+    public DbContext Context { get; private set; }
+
+    public void Commit()
+    {
+        if (Context == null)
+            throw new NullReferenceException(nameof(Context));
+
+        try
         {
-            Context = context;
+            Context.SaveChanges();
         }
-        public void Commit()
+        // Temporary catch
+        catch (Exception ex)
         {
-            if (Context == null)
-                throw new NullReferenceException(nameof(Context));
-
-            try
-            {
-                Context.SaveChanges();
-            }
-            // Temporary catch
-            catch (Exception ex)
-            {
-
-            }
         }
+    }
 
-        public void Dispose()
-        {
-            if (Context == null)
-                throw new NullReferenceException(nameof(Context));
-            
-            Context.Dispose();
-            
-            Context = null;
-        }
+    public void Dispose()
+    {
+        if (Context == null)
+            throw new NullReferenceException(nameof(Context));
+
+        Context.Dispose();
+
+        Context = null;
     }
 }
