@@ -51,6 +51,22 @@ tr {
     height: 20px;
     margin-right: 1rem; 
 }
+.pagination {
+    justify-content: center
+}
+.page-link {
+    color: black;
+}
+.page-link:hover {
+    color: white;
+    background-color: greenyellow;
+    border-color: greenyellow;
+}
+.page-item.active .page-link {
+    color: black;
+    background: #eee;
+    border-color: #e7e7e7;
+}
 #tableContentCoinContainer {
     display: flex;
     flex-direction: row;

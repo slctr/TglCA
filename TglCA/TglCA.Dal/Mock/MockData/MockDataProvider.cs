@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TglCA.Dal.Interfaces.Entities;
+﻿using TglCA.Dal.Interfaces.Entities;
 
 namespace TglCA.Dal.Mock.MockData
 {
     public class MockDataProvider
     {
-        public List<Currency> Currencies { get; set; } = new List<Currency>()
+        private static readonly List<Currency> referenceCurrencies = new List<Currency>
         {
             new Currency()
             {
@@ -48,6 +43,8 @@ namespace TglCA.Dal.Mock.MockData
             }
         };
 
+        public List<Currency> Currencies { get; set; } = GenerateCurrencies(1000);
+
         private static byte[] SetImg(string imgName)
         {
             string imagepath = Directory.GetCurrentDirectory() + $@"\Img\{imgName}";
@@ -57,6 +54,17 @@ namespace TglCA.Dal.Mock.MockData
                 fs.Read(byData, 0, byData.Length);
                 return byData;
             }
+        }
+
+        private static List<Currency> GenerateCurrencies(int count)
+        {
+            Random random = new Random();
+            List<Currency> currencies = new List<Currency>();
+            for (int i = 0; i < count; ++i)
+            {
+                currencies.Add(referenceCurrencies[random.Next(0,4)]);
+            }
+            return currencies;
         }
     }
 }
