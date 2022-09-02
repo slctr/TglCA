@@ -42,6 +42,7 @@ namespace TglCA.Bll.Services.Mock
                 .Select(c =>
                 {
                     BllCurrency bllCurrency = c.ToBllCurrency();
+                    bllCurrency.Img = SetImg(c.CurrencyId+".png");
                     GenerateMockBlValues(bllCurrency);
                     return bllCurrency;
                 });
@@ -79,6 +80,16 @@ namespace TglCA.Bll.Services.Mock
             double GetRandomDouble(int multiply)
             {
                 return random.NextDouble() * multiply;
+            }
+        }
+        private static byte[] SetImg(string imgName)
+        {
+            string imagepath = Directory.GetCurrentDirectory() + $@"\Img\{imgName}";
+            using (FileStream fs = new FileStream(imagepath, FileMode.Open))
+            {
+                byte[] byData = new byte[fs.Length];
+                fs.Read(byData, 0, byData.Length);
+                return byData;
             }
         }
     }

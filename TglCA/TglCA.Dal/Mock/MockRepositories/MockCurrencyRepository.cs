@@ -18,7 +18,7 @@ namespace TglCA.Dal.Mock.MockRepositories
             foreach (var currency in _provider.Currencies.Where(currency => currency.Id == entity.Id))
             {
                 currency.Name = entity.Name;
-                currency.Img = entity.Img;
+                currency.CurrencyId = entity.CurrencyId;
                 currency.Symbol = entity.Symbol;
             }
         }

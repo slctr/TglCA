@@ -11,51 +11,39 @@ namespace TglCA.Dal.Mock.MockData
                 Id = 1,
                 Name = "Bitcoin",
                 Symbol = "BTC",
-                Img = SetImg("0xbtc.png")
+                CurrencyId = "bitcoin"
             },
             new Currency()
             {
                 Id = 2,
                 Name = "Ethereum",
                 Symbol = "ETH",
-                Img = SetImg("eth.png")
+                CurrencyId = "ethereum"
             },
             new Currency()
             {
                 Id = 3,
                 Name = "Tether",
                 Symbol = "USDT",
-                Img = SetImg("usdt.png")
+                CurrencyId = "tether"
             },
             new Currency()
             {
                 Id = 4,
                 Name = "USD Coin",
                 Symbol = "USDC",
-                Img = SetImg("usdc.png")
+                CurrencyId = "usd_coin"
             },
             new Currency()
             {
                 Id = 5,
                 Name = "Binance USD",
                 Symbol = "BUSD",
-                Img = SetImg("bnb.png")
+                CurrencyId = "binance_usd"
             }
         };
 
         public List<Currency> Currencies { get; set; } = GenerateCurrencies(1000);
-
-        private static byte[] SetImg(string imgName)
-        {
-            string imagepath = Directory.GetCurrentDirectory() + $@"\Img\{imgName}";
-            using (FileStream fs = new FileStream(imagepath, FileMode.Open))
-            {
-                byte[] byData = new byte[fs.Length];
-                fs.Read(byData, 0, byData.Length);
-                return byData;
-            }
-        }
-
         private static List<Currency> GenerateCurrencies(int count)
         {
             Random random = new Random();

@@ -12,7 +12,7 @@ namespace TglCA.Bll.Mappers
             {
                 Id = currency.Id,
                 Name = currency.Name,
-                Img = currency.Img,
+                CurrencyId = currency.CurrencyId,
                 Symbol = currency.Symbol
             };
         }
@@ -22,7 +22,7 @@ namespace TglCA.Bll.Mappers
             {
                 Id = bllCurrency.Id,
                 Name = bllCurrency.Name,
-                Img = bllCurrency.Img,
+                CurrencyId = bllCurrency.CurrencyId,
                 Symbol = bllCurrency.Symbol
             };
         }

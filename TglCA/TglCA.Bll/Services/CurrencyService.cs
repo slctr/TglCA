@@ -23,7 +23,7 @@ namespace TglCA.Bll.Services
             Currency currency = new Currency()
             {
                 Id = entity.Id,
-                Img = entity.Img,
+                CurrencyId = entity.CurrencyId,
                 Name = entity.Name,
                 Symbol = entity.Symbol
             };
