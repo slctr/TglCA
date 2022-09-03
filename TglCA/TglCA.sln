@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Mvc.PL", "TglCA.Mvc.PL\TglCA.Mvc.PL.csproj", "{D7D66C98-EECC-465F-9C83-D23BE2E0B5E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll", "TglCA.Bll\TglCA.Bll.csproj", "{8A6C496A-336A-40B4-8446-2E5F9DA952D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{558849DD-4ECF-4B25-9D8F-0983BA843564} = {558849DD-4ECF-4B25-9D8F-0983BA843564}
+		{7FB33B1F-DE7E-4D44-A285-85EAF40D2175} = {7FB33B1F-DE7E-4D44-A285-85EAF40D2175}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Dal", "TglCA.Dal\TglCA.Dal.csproj", "{9243DF6B-BB77-4704-964C-BD1AF1347B58}"
 EndProject
@@ -19,11 +23,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Tests", "TglCA.Bl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Dal.Tests", "TglCA.Dal.Tests\TglCA.Dal.Tests.csproj", "{2C6AA252-C1ED-4471-8778-2F73B1DF8865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TglCA.Bll.Api.CoinGecko", "TglCA.Bll.Api.CoinGecko\TglCA.Bll.Api.CoinGecko.csproj", "{ACD0E9BD-C0F1-44B7-BF9A-D1B797B897A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.CoinGecko", "TglCA.Bll.Api.CoinGecko\TglCA.Bll.Api.CoinGecko.csproj", "{ACD0E9BD-C0F1-44B7-BF9A-D1B797B897A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TglCA.Bll.Api.Aggregator.Interfaces", "TglCA.Bll.Api.Aggregator.Interfaces\TglCA.Bll.Api.Aggregator.Interfaces.csproj", "{558849DD-4ECF-4B25-9D8F-0983BA843564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Aggregator.Interfaces", "TglCA.Bll.Api.Aggregator.Interfaces\TglCA.Bll.Api.Aggregator.Interfaces.csproj", "{558849DD-4ECF-4B25-9D8F-0983BA843564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TglCA.Bll.Api.Aggregator", "TglCA.Bll.Api.Aggregator\TglCA.Bll.Api.Aggregator.csproj", "{7FB33B1F-DE7E-4D44-A285-85EAF40D2175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Aggregator", "TglCA.Bll.Api.Aggregator\TglCA.Bll.Api.Aggregator.csproj", "{7FB33B1F-DE7E-4D44-A285-85EAF40D2175}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35949288-7B15-48DA-8060-E3A066D0D420} = {35949288-7B15-48DA-8060-E3A066D0D420}
+		{ACD0E9BD-C0F1-44B7-BF9A-D1B797B897A5} = {ACD0E9BD-C0F1-44B7-BF9A-D1B797B897A5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

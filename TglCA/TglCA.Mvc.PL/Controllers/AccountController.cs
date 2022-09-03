@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TglCA.Bll.Interfaces.Entities.BllModels;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Mvc.PL.Models;
 
@@ -8,13 +11,11 @@ namespace TglCA.Mvc.PL.Controllers;
 [Route("/[controller]/[action]")]
 public class AccountController : Controller
 {
-    private readonly SignInManager<User> _signInManager;
-    private readonly UserManager<User> _userManager;
+    private readonly IUserService _userService;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(IUserService userUservice)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
+        _userService = userUservice;
     }
 
     [HttpGet]
@@ -32,20 +33,26 @@ public class AccountController : Controller
     [HttpPost]
     public async ValueTask<IActionResult> Register(UserInputModel userInputModel)
     {
-        if (!ModelState.IsValid) return View(userInputModel);
-
-        var user = new User
+        if (!ModelState.IsValid)
         {
-            Email = userInputModel.Email,
-            UserName = userInputModel.UserName
-        };
-        var result = await _userManager.CreateAsync(user, userInputModel.Password);
-        if (!result.Succeeded)
-        {
-            foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
             return View(userInputModel);
         }
 
+        var errModel = await _userService.CreateAsync(new BllUserModel()
+        {
+            Email = userInputModel.Email,
+            Password = userInputModel.Password
+        });
+
+        if (!errModel.IsSuccess)
+        {
+            foreach (var item in errModel.ErrorDetails)
+            {
+                ModelState.AddModelError(string.Empty, item.ErrorMessage);
+            }
+            return View(userInputModel);
+        }
+        
         return RedirectToAction(nameof(Successful));
     }
 
@@ -60,21 +67,18 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid) return View(userInputModel);
 
-        User user = await _userManager.FindByEmailAsync(userInputModel.Email);
-        if (user == null)
+        var errModel = await _userService.LoginAsync(new BllUserModel()
         {
-            ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
-            return View(userInputModel);
-        }
+            Email = userInputModel.Email,
+            Password = userInputModel.Password
+        });
 
-        await _signInManager.SignOutAsync();
-
-        var result =
-            await _signInManager.PasswordSignInAsync(user, userInputModel.Password, false, true);
-
-        if (!result.Succeeded)
+        if (!errModel.IsSuccess)
         {
-            ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
+            foreach (var item in errModel.ErrorDetails)
+            {
+                ModelState.AddModelError(string.Empty, item.ErrorMessage);
+            }
             return View(userInputModel);
         }
 
@@ -83,7 +87,33 @@ public class AccountController : Controller
 
     public async ValueTask<IActionResult> LogOut()
     {
-        await _signInManager.SignOutAsync();
+        await _userService.SignOutAsync();
+        return RedirectToAction("ByMarketCap", "Main");
+    }
+
+    [AllowAnonymous]
+    public IActionResult GoogleLogin()
+    {
+        string redirectUrl = Url.Action("GoogleResponse", "Account");
+        var properties = _userService.GetAuthenticationProperties("Google", redirectUrl);
+        return new ChallengeResult("Google", properties);
+    }
+
+    [AllowAnonymous]
+    public async ValueTask<IActionResult> GoogleResponse()
+    {
+        var errModel = await _userService.GoogleResponse();
+
+        if (!errModel.IsSuccess)
+        {
+            foreach (var item in errModel.ErrorDetails)
+            {
+                ModelState.AddModelError(string.Empty, item.ErrorMessage);
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
         return RedirectToAction("ByMarketCap", "Main");
     }
 }

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TglCA.Bll.Api.Aggregator.Interfaces\TglCA.Bll.Api.Aggregator.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

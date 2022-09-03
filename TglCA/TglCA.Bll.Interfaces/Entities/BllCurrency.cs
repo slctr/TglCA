@@ -9,6 +9,7 @@ namespace TglCA.Bll.Interfaces.Entities
 {
     public class BllCurrency : BllEntityBase
     {
+        public string MarketId { get; set; }
         public byte[] Img { get; set; }
         public int Rank { get; set; }
         public string Name { get; set; }

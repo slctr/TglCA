@@ -1,5 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
-using TglCA.Bll.Interfaces.IServices;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Mappers;
 using TglCA.Dal.Interfaces.IRepositories;
 
@@ -80,6 +80,11 @@ namespace TglCA.Bll.Services.Mock
             {
                 return random.NextDouble() * multiply;
             }
+        }
+
+        public BllCurrency GetByMarketId(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,5 +8,6 @@ public interface IService<T> where T : BllEntityBase
     public void Update(T entity);
     public void Delete(T entity);
     public T GetById(int id);
+    public T GetByMarketId(string id);
     public IEnumerable<T> GetAll();
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TglCA.Bll.Interfaces.IServices;
+using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Bll.Services;
 using TglCA.Bll.Services.Mock;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
@@ -52,8 +53,14 @@ builder.Services.AddIdentity<User, Role>(options =>
         #endregion
     })
     .AddEntityFrameworkStores<MainDbContext>();
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
 builder.Services.AddTransient<ICurrencyRepository, MockCurrencyRepository>();
 builder.Services.AddTransient<ICurrencyService, MockCurrencyService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 #endregion
 

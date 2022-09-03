@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TglCA.Bll.Interfaces\TglCA.Bll.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

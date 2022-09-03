@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Interfaces.IServices;
 using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
@@ -47,6 +48,7 @@ namespace TglCA.Bll.Services
         public IEnumerable<BllCurrency> GetAll()
         {
             throw new NotImplementedException();
+            //we have to get data from bll.aggregator there and convert it into bllcurrency
         }
 
         public void CreateOrUpdate(BllCurrency entity)
@@ -55,6 +57,11 @@ namespace TglCA.Bll.Services
         }
 
         public IEnumerable<BllCurrency> GetAllByMarketCap()
+        {
+            throw new NotImplementedException();
+        }
+
+        public BllCurrency GetByMarketId(string id)
         {
             throw new NotImplementedException();
         }
