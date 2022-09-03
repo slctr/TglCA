@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     <div id="tableContentCoinContainer">
-                        <img class="coinIcon" src="@Model[i].GetImageSrc()"/>
+                        <img class="coinIcon" src="@Model[i].Img"/>
                         @Html.ActionLink(Model[i].Name, "CoinPage", "Coin", null, new { @class = "navButton" })
                         <p class="symbolText">@Model[i].Symbol</p>
                     </div>

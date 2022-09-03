@@ -15,12 +15,15 @@ public class MockCurrencyRepository : ICurrencyRepository
 
     public void Update(Currency entity)
     {
-        foreach (var currency in _provider.Currencies.Where(currency => currency.Id == entity.Id))
+        Currency? currency = _provider.Currencies
+            .FirstOrDefault(currency => currency.Id == entity.Id);
+        if (currency == null)
         {
-            currency.Name = entity.Name;
-            currency.CurrencyId = entity.CurrencyId;
-            currency.Symbol = entity.Symbol;
+            return;
         }
+        currency.Name = entity.Name;
+        currency.CurrencyId = entity.CurrencyId;
+        currency.Symbol = entity.Symbol;
     }
 
     public void Delete(Currency entity)

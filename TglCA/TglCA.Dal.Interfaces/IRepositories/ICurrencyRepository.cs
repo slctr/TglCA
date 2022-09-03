@@ -5,5 +5,5 @@ namespace TglCA.Dal.Interfaces.IRepositories;
 
 public interface ICurrencyRepository : IRepository<Currency>
 {
-    public void CreateOrUpdate(Currency entity);
+    void CreateOrUpdate(Currency entity);
 }

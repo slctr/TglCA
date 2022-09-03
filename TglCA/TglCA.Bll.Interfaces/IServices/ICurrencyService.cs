@@ -5,6 +5,6 @@ namespace TglCA.Bll.Interfaces.IServices;
 
 public interface ICurrencyService : IService<BllCurrency>
 {
-    public void CreateOrUpdate(BllCurrency entity);
-    public IEnumerable<BllCurrency> GetAllByMarketCap();
+    void CreateOrUpdate(BllCurrency entity);
+    IEnumerable<BllCurrency> GetAllByMarketCap();
 }

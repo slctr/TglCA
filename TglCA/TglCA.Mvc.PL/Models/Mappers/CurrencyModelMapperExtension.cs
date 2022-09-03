@@ -8,7 +8,7 @@ public static class CurrencyModelMapperExtension
     {
         return new CurrencyViewModel
         {
-            Img = bllCurrency.Img,
+            Img = bllCurrency.GetImageSrc(),
             MarketCapUsd = bllCurrency.MarketCapUsd,
             Name = bllCurrency.Name,
             PercentChange1h = bllCurrency.PercentChange1h,
@@ -21,8 +21,7 @@ public static class CurrencyModelMapperExtension
         };
     }
 
-    public static IEnumerable<CurrencyViewModel> ToViewModels
-        (this IEnumerable<BllCurrency> currencies)
+    public static IEnumerable<CurrencyViewModel> ToViewModels(this IEnumerable<BllCurrency> currencies)
     {
         return currencies.Select(c => c.ToViewModel());
     }

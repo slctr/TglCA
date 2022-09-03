@@ -4,9 +4,9 @@ namespace TglCA.Bll.Interfaces.IServices.Base;
 
 public interface IService<T> where T : BllEntityBase
 {
-    public void Create(T entity);
-    public void Update(T entity);
-    public void Delete(T entity);
-    public T GetById(int id);
-    public IEnumerable<T> GetAll();
+    void Create(T entity);
+    void Update(T entity);
+    void Delete(T entity);
+    T GetById(int id);
+    IEnumerable<T> GetAll();
 }

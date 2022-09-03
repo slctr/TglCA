@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.IServices;
 using TglCA.Mvc.PL.Models;
@@ -29,8 +30,8 @@ public class MainController : Controller
         return View(GetPagedViewModel(currencies, pageSize, GetPageSize()));
     }
 
-    private IPagedList<CurrencyViewModel> GetPagedViewModel
-    (IEnumerable<BllCurrency> currencies,
+    private IPagedList<CurrencyViewModel> GetPagedViewModel(
+        IEnumerable<BllCurrency> currencies,
         int pageNumber,
         int pageSize)
     {
@@ -42,5 +43,10 @@ public class MainController : Controller
     private int GetPageSize()
     {
         return _configuration.GetSection("PageSettings:PageSize").Get<int>();
+    }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
