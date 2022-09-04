@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Interfaces.IServices;
+using TglCA.Bll.Mappers;
 using TglCA.Bll.Services.Mock;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
@@ -54,6 +56,7 @@ builder.Services.AddIdentity<User, Role>(options =>
     .AddEntityFrameworkStores<MainDbContext>();
 builder.Services.AddTransient<ICurrencyRepository, MockCurrencyRepository>();
 builder.Services.AddTransient<ICurrencyService, MockCurrencyService>();
+builder.Services.AddTransient<ICurrencyMapper, CurrencyMapper>();
 
 #endregion
 

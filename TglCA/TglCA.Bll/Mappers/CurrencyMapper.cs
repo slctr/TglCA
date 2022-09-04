@@ -1,11 +1,12 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Dal.Interfaces.Entities;
 
 namespace TglCA.Bll.Mappers;
 
-internal static class CurrencyMapperExtension
+public class CurrencyMapper : ICurrencyMapper
 {
-    public static BllCurrency ToBllCurrency(this Currency currency)
+    public BllCurrency ToBllCurrency(Currency currency)
     {
         return new BllCurrency
         {
@@ -17,7 +18,7 @@ internal static class CurrencyMapperExtension
         };
     }
 
-    public static Currency ToCurrency(this BllCurrency bllCurrency)
+    public Currency ToCurrency(BllCurrency bllCurrency)
     {
         return new Currency
         {

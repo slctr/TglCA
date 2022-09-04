@@ -1,4 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Interfaces.IServices;
 using TglCA.Bll.Mappers;
 using TglCA.Dal.Interfaces.IRepositories;
@@ -8,30 +9,32 @@ namespace TglCA.Bll.Services.Mock;
 public class MockCurrencyService : ICurrencyService
 {
     private readonly ICurrencyRepository _currencyRepository;
+    private readonly ICurrencyMapper _currencyMapper;
 
-    public MockCurrencyService(ICurrencyRepository repository)
+    public MockCurrencyService(ICurrencyRepository repository, ICurrencyMapper currencyMapper)
     {
         _currencyRepository = repository;
+        _currencyMapper = currencyMapper;
     }
 
     public void Create(BllCurrency entity)
     {
-        _currencyRepository.Create(entity.ToCurrency());
+        _currencyRepository.Create(_currencyMapper.ToCurrency(entity));
     }
 
     public void Update(BllCurrency entity)
     {
-        _currencyRepository.Update(entity.ToCurrency());
+        _currencyRepository.Update(_currencyMapper.ToCurrency(entity));
     }
 
     public void Delete(BllCurrency entity)
     {
-        _currencyRepository.Delete(entity.ToCurrency());
+        _currencyRepository.Delete(_currencyMapper.ToCurrency(entity));
     }
 
     public BllCurrency GetById(int id)
     {
-        var bllCurrency = _currencyRepository.GetById(id).ToBllCurrency();
+        var bllCurrency = _currencyMapper.ToBllCurrency(_currencyRepository.GetById(id));
         GenerateMockBlValues(bllCurrency);
         return bllCurrency;
     }
@@ -42,7 +45,7 @@ public class MockCurrencyService : ICurrencyService
             .GetAll()
             .Select(c =>
             {
-                var bllCurrency = c.ToBllCurrency();
+                var bllCurrency = _currencyMapper.ToBllCurrency(c);
                 GenerateMockBlValues(bllCurrency);
                 return bllCurrency;
             });
@@ -51,7 +54,7 @@ public class MockCurrencyService : ICurrencyService
 
     public void CreateOrUpdate(BllCurrency entity)
     {
-        _currencyRepository.CreateOrUpdate(entity.ToCurrency());
+        _currencyRepository.CreateOrUpdate(_currencyMapper.ToCurrency(entity));
     }
 
     public IEnumerable<BllCurrency> GetAllByMarketCap()
