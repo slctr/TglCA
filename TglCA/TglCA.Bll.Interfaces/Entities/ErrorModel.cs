@@ -8,7 +8,7 @@ namespace TglCA.Bll.Interfaces.Entities
 {
     public class ErrorModel
     {
-        public IEnumerable<ErrorDetail>? ErrorDetails { get; set; }
+        public IEnumerable<ErrorDetail> ErrorDetails { get; set; } = Array.Empty<ErrorDetail>();
 
         public bool IsSuccess
         {
@@ -21,5 +21,7 @@ namespace TglCA.Bll.Interfaces.Entities
                 return true;
             }
         }
+
+        public static ErrorModel CreateSuccess() => new();
     }
 }

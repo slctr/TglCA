@@ -51,10 +51,10 @@ namespace TglCA.Dal.Mock.MockData
         private static byte[] SetImg(string imgName)
         {
             string imagepath = Directory.GetCurrentDirectory() + $@"\Img\{imgName}";
-            using (FileStream fs = new FileStream(imagepath, FileMode.Open))
+            using (FileStream fileStream = new FileStream(imagepath, FileMode.Open))
             {
-                byte[] byData = new byte[fs.Length];
-                fs.Read(byData, 0, byData.Length);
+                byte[] byData = new byte[fileStream.Length];
+                fileStream.Read(byData, 0, byData.Length);
                 return byData;
             }
         }

@@ -15,23 +15,23 @@ namespace TglCA.Bll.Services
 
         public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
         public async ValueTask<ErrorModel> CreateAsync(BllUserModel userModel)
         {
-
             var user = new User
             {
                 Email = userModel.Email,
                 UserName = userModel.UserName
             };
+
             var result = await _userManager.CreateAsync(user, userModel.Password);
+
             if (!result.Succeeded)
             {
-                ErrorModel errorModel = new ErrorModel()
+                var errorModel = new ErrorModel()
                 {
                     ErrorDetails = result.Errors.Select(er => new ErrorDetail()
                     {
@@ -48,14 +48,16 @@ namespace TglCA.Bll.Services
         {
             User user = await _userManager.FindByEmailAsync(userModel.Email);
 
-            var errorModel = new ErrorModel();
-
             if (user == null)
             {
-                errorModel.ErrorDetails = new List<ErrorDetail>().Append(new ErrorDetail()
+                var errorModel = new ErrorModel();
+                errorModel.ErrorDetails = new List<ErrorDetail>()
                 {
-                    ErrorMessage = "SignIn failure: Wrong login info!"
-                });
+                     new ErrorDetail()
+                     {
+                         ErrorMessage = "SignIn failure: Wrong login info!"
+                     }
+                };
                 return errorModel;
             }
 
@@ -66,37 +68,44 @@ namespace TglCA.Bll.Services
 
             if (!result.Succeeded)
             {
-                errorModel.ErrorDetails = new List<ErrorDetail>().Append(new ErrorDetail()
+                var errorModel = new ErrorModel();
+                errorModel.ErrorDetails = new List<ErrorDetail>()
                 {
-                    ErrorMessage = "SignIn failure: Wrong login info!"
-                });
+                     new ErrorDetail()
+                     {
+                         ErrorMessage = "SignIn failure: Wrong login info!"
+                     }
+                };
+                return errorModel;
             }
-            return errorModel;
+
+            return ErrorModel.CreateSuccess();
         }
 
-        public async ValueTask SignOutAsync()
+        public Task SignOutAsync()
         {
-            await _signInManager.SignOutAsync();
+            return _signInManager.SignOutAsync();
         }
 
         public AuthenticationProperties GetAuthenticationProperties(string provider, string redirectUrl)
         {
-            var result = _signInManager.GetExternalLoginInfoAsync();
             return _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         }
 
         public async ValueTask<ErrorModel> GoogleResponse()
         {
             var info = await _signInManager.GetExternalLoginInfoAsync();
-            var errorModel = new ErrorModel();
 
             if (info == null)
             {
-                errorModel.ErrorDetails = new List<ErrorDetail>().Append(new ErrorDetail()
+                var errorModel = new ErrorModel();
+                errorModel.ErrorDetails = new List<ErrorDetail>()
                 {
-                    ErrorMessage = "SignIn failure: Wrong login info!"
-                });
-
+                     new ErrorDetail()
+                     {
+                         ErrorMessage = "SignIn failure: Wrong login info!"
+                     }
+                };
                 return errorModel;
             }
 
@@ -108,7 +117,7 @@ namespace TglCA.Bll.Services
             };
             if (result.Succeeded)
             {
-                return errorModel;
+                ErrorModel.CreateSuccess();
             }
 
             var user = new User
@@ -121,19 +130,19 @@ namespace TglCA.Bll.Services
 
             if (!identityResult.Succeeded)
             {
-                errorModel = new ErrorModel()
+                var errorModel = new ErrorModel();
+
+                errorModel.ErrorDetails = identityResult.Errors.Select(er => new ErrorDetail()
                 {
-                    ErrorDetails = identityResult.Errors.Select(er => new ErrorDetail()
-                    {
-                        ErrorMessage = er.Description
-                    })
-                };
+                    ErrorMessage = er.Description
+                });
+
                 return errorModel;
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return errorModel;
+            return ErrorModel.CreateSuccess();
         }
     }
 }

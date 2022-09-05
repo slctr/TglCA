@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.BllModels;
 using TglCA.Bll.Interfaces.Interfaces;
-using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Mvc.PL.Models;
 
 namespace TglCA.Mvc.PL.Controllers;
@@ -46,10 +45,7 @@ public class AccountController : Controller
 
         if (!errModel.IsSuccess)
         {
-            foreach (var item in errModel.ErrorDetails)
-            {
-                ModelState.AddModelError(string.Empty, item.ErrorMessage);
-            }
+            AddModelStateErrors(errModel);
             return View(userInputModel);
         }
         
@@ -75,10 +71,7 @@ public class AccountController : Controller
 
         if (!errModel.IsSuccess)
         {
-            foreach (var item in errModel.ErrorDetails)
-            {
-                ModelState.AddModelError(string.Empty, item.ErrorMessage);
-            }
+            AddModelStateErrors(errModel);
             return View(userInputModel);
         }
 
@@ -106,14 +99,18 @@ public class AccountController : Controller
 
         if (!errModel.IsSuccess)
         {
-            foreach (var item in errModel.ErrorDetails)
-            {
-                ModelState.AddModelError(string.Empty, item.ErrorMessage);
-            }
-
+            AddModelStateErrors(errModel);
             return RedirectToAction("Login", "Account");
         }
 
         return RedirectToAction("ByMarketCap", "Main");
+    }
+
+    public void AddModelStateErrors(ErrorModel errorModel)
+    {
+        foreach (var item in errorModel.ErrorDetails)
+        {
+            ModelState.AddModelError(string.Empty, item.ErrorMessage);
+        }
     }
 }

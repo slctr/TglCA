@@ -8,7 +8,7 @@ namespace TglCA.Bll.Interfaces.Interfaces
     {
         ValueTask<ErrorModel> CreateAsync(BllUserModel userModel);
         ValueTask<ErrorModel> LoginAsync(BllUserModel userModel);
-        ValueTask SignOutAsync();
+        Task SignOutAsync();
         AuthenticationProperties GetAuthenticationProperties(string provider, string redirectUrl);
         ValueTask<ErrorModel> GoogleResponse();
     }

@@ -20,7 +20,8 @@ namespace TglCA.Mvc.PL.Controllers
         [HttpGet]
         public IActionResult ByMarketCap()
         {
-            return View(_currencyService.GetAllByMarketCap().ToViewModels().ToList());
+            var coinList =_currencyService.GetAllByMarketCap();
+            return View(coinList.ToViewModels().ToList());
         }
     }
 }
