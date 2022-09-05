@@ -117,7 +117,7 @@ namespace TglCA.Bll.Services
             };
             if (result.Succeeded)
             {
-                ErrorModel.CreateSuccess();
+                return ErrorModel.CreateSuccess();
             }
 
             var user = new User

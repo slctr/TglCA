@@ -55,10 +55,6 @@ public class CurrencyService : ICurrencyService
     {
         throw new NotImplementedException();
     }
-    public IEnumerable<BllCurrency> GetAllByMarketCap()
-    {
-        throw new NotImplementedException();
-    }
 
     public BllCurrency GetByMarketId(string id)
     {

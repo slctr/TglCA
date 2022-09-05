@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TglCA.Bll.Interfaces.Entities;
-using TglCA.Bll.Interfaces.IServices;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Mvc.PL.Models;
 using TglCA.Mvc.PL.Models.Mappers;
 using X.PagedList;

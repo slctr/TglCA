@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TglCA.Bll.Interfaces.Interfaces;
-<<<<<<< HEAD
-using TglCA.Bll.Interfaces.IServices;
 using TglCA.Bll.Mappers;
-=======
 using TglCA.Bll.Services;
->>>>>>> AllCoinsList
 using TglCA.Bll.Services.Mock;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
@@ -65,11 +61,8 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 });
 builder.Services.AddTransient<ICurrencyRepository, MockCurrencyRepository>();
 builder.Services.AddTransient<ICurrencyService, MockCurrencyService>();
-<<<<<<< HEAD
 builder.Services.AddTransient<ICurrencyMapper, CurrencyMapper>();
-=======
 builder.Services.AddTransient<IUserService, UserService>();
->>>>>>> AllCoinsList
 
 #endregion
 
