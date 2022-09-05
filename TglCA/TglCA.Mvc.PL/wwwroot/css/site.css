@@ -1,18 +1,86 @@
-html {
-  font-size: 14px;
-}
+html { font-size: 14px; }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html { font-size: 16px; }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
-body {
-  margin-bottom: 60px;
+table,
+thead,
+tr,
+tbody,
+th,
+td { text-align: center; }
+
+thead {
+    border-bottom: #dee2e6 1px solid;
+    border-top: #dee2e6 1px solid
 }
+
+tr { border-bottom: #dee2e6 1px solid; }
+
+.navButton {
+    color: black;
+    text-decoration: none;
+}
+
+.navButton:hover { color: greenyellow; }
+
+.dropdown:hover .navButton { color: greenyellow; }
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.symbolText {
+    color: gray;
+    font-size: x-small;
+    margin-left: 5px;
+}
+
+.coinIcon {
+    height: 20px;
+    margin-right: 1rem;
+    width: 20px;
+}
+
+.pagination { justify-content: center }
+
+.page-link { color: black; }
+
+.page-link:hover {
+    background-color: greenyellow;
+    border-color: greenyellow;
+    color: white;
+}
+
+.page-item.active .page-link {
+    background: #eee;
+    border-color: #e7e7e7;
+    color: black;
+}
+
+#tableContentCoinContainer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.tableContentContainer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 3px;
+}
+
+.tableText { margin-bottom: 0; }
+
+#logoHeader { color: black }
+
+#tableContainer { min-width: 95vw; }

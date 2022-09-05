@@ -60,7 +60,7 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid) return View(userInputModel);
 
-        User user = await _userManager.FindByEmailAsync(userInputModel.Email);
+        var user = await _userManager.FindByEmailAsync(userInputModel.Email);
         if (user == null)
         {
             ModelState.AddModelError(string.Empty, "SignIn failure: wrong email or password");
@@ -78,12 +78,12 @@ public class AccountController : Controller
             return View(userInputModel);
         }
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("ByMarketCap", "Main");
     }
 
     public async ValueTask<IActionResult> LogOut()
     {
         await _signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("ByMarketCap", "Main");
     }
 }

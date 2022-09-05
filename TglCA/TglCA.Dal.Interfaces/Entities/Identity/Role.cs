@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TglCA.Dal.Interfaces.Entities.Identity
-{
-    public class Role : IdentityRole<int>
-    {
+namespace TglCA.Dal.Interfaces.Entities.Identity;
 
-    }
+public class Role : IdentityRole<int>
+{
 }
