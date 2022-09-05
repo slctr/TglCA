@@ -1,4 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Interfaces.IServices;
 using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
@@ -51,6 +52,15 @@ public class CurrencyService : ICurrencyService
     }
 
     public IEnumerable<BllCurrency> GetAllByMarketCap()
+    {
+        throw new NotImplementedException();
+    }
+    public IEnumerable<BllCurrency> GetAllByMarketCap()
+    {
+        throw new NotImplementedException();
+    }
+
+    public BllCurrency GetByMarketId(string id)
     {
         throw new NotImplementedException();
     }
