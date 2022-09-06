@@ -96,6 +96,7 @@ namespace TglCA.Bll.Services
         {
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
+
             if (info == null)
             {
                 var errorModel = new ErrorModel();
@@ -111,19 +112,21 @@ namespace TglCA.Bll.Services
 
             var result = await _signInManager.ExternalLoginSignInAsync(
                 info.LoginProvider, info.ProviderKey, false);
-            string[] userInfo = {
-                info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", string.Empty),
-                info.Principal.FindFirst(ClaimTypes.Email).Value
-            };
+
             if (result.Succeeded)
             {
                 return ErrorModel.CreateSuccess();
             }
 
+            var bllUser = new BllUserModel()
+            {
+                Email = info.Principal.FindFirst(ClaimTypes.Email).Value
+            };
+
             var user = new User
             {
-                Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
-                UserName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", string.Empty)
+                Email = bllUser.Email,
+                UserName = bllUser.UserName
             };
 
             var identityResult = await _userManager.CreateAsync(user);
@@ -139,6 +142,8 @@ namespace TglCA.Bll.Services
 
                 return errorModel;
             }
+
+            identityResult = await _userManager.AddLoginAsync(user, info);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
 

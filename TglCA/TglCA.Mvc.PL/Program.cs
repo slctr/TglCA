@@ -55,10 +55,11 @@ builder.Services.AddIdentity<User, Role>(options =>
     })
     .AddEntityFrameworkStores<MainDbContext>();
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-});
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    }
+);
 builder.Services.AddTransient<ICurrencyRepository, MockCurrencyRepository>();
 builder.Services.AddTransient<ICurrencyService, MockCurrencyService>();
 builder.Services.AddTransient<ICurrencyMapper, CurrencyMapper>();
@@ -78,7 +79,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-    
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
