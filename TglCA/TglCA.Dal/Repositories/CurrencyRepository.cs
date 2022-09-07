@@ -1,37 +1,28 @@
-﻿using TglCA.Dal.Interfaces.Entities;
+﻿using TglCA.Dal.Data.DbContextData;
+using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
+using TglCA.Dal.Repositories.Base;
 
 namespace TglCA.Dal.Repositories;
 
-public class CurrencyRepository : ICurrencyRepository
+public class CurrencyRepository : RepositoryBase<Currency>,ICurrencyRepository
 {
-    public void Create(Currency entity)
+    public CurrencyRepository(MainDbContext context) : base(context)
     {
-        throw new NotImplementedException();
     }
-
-    public void Update(Currency entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Delete(Currency entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Currency GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Currency> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
     public void CreateOrUpdate(Currency entity)
     {
-        throw new NotImplementedException();
+        Currency? currency = _dbSet.FirstOrDefault(c => c.CurrencyId == entity.CurrencyId);
+        if (currency == null)
+        {
+            Create(entity);
+            return;
+        }
+        Update(entity);
+    }
+
+    public Currency? GetByCurrencyId(string currencyId)
+    {
+        return _dbSet.FirstOrDefault(c => c.CurrencyId == currencyId);
     }
 }
