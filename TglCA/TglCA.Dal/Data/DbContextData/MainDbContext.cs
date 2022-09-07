@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.Entities.Identity;
 
 namespace TglCA.Dal.Data.DbContextData;
@@ -9,7 +10,9 @@ public class MainDbContext : IdentityDbContext<User, Role, int, UserClaim, UserR
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
     {
     }
-
+    #region DbSets
+        DbSet<Currency> Currencies { get; set; }
+    #endregion
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -34,9 +37,8 @@ public class MainDbContext : IdentityDbContext<User, Role, int, UserClaim, UserR
 
         modelBuilder.Entity<RoleClaim>()
             .ToTable("RoleClaims");
+
+        modelBuilder.Entity<Currency>()
+            .HasQueryFilter(c => !c.IsDeleted);
     }
-
-    #region DbSets
-
-    #endregion
 }

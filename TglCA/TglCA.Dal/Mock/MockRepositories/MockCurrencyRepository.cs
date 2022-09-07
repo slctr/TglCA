@@ -31,14 +31,34 @@ public class MockCurrencyRepository : ICurrencyRepository
         _provider.Currencies.Remove(entity);
     }
 
-    public Currency GetById(int id)
+    public Currency? GetById(int id)
     {
-        return _provider.Currencies.FirstOrDefault(c => c.Id == id);
+        return _provider.Currencies
+            .Where(c => !c.IsDeleted)
+            .FirstOrDefault(c => c.Id == id);
     }
 
     public IEnumerable<Currency> GetAll()
     {
+        return _provider.Currencies
+            .Where(c => !c.IsDeleted);
+    }
+
+    public IEnumerable<Currency> GetAllWithoutQueryFilters()
+    {
         return _provider.Currencies;
+    }
+
+    public void SafeDelete(Currency entity)
+    {
+        Currency? currency = GetById(entity.Id);
+        if (currency == null)
+        {
+            return;
+        }
+
+        currency.IsDeleted = true;
+        Update(currency);
     }
 
     public void CreateOrUpdate(Currency entity)
@@ -50,5 +70,12 @@ public class MockCurrencyRepository : ICurrencyRepository
         }
 
         Create(entity);
+    }
+
+    public Currency? GetByCurrencyId(string currencyId)
+    {
+        return _provider.Currencies
+            .Where(c => !c.IsDeleted)
+            .FirstOrDefault(c => c.CurrencyId == currencyId);
     }
 }

@@ -9,4 +9,6 @@ public interface IRepository<T> where T : BaseEntity, new()
     void Delete(T entity);
     T? GetById(int id);
     IEnumerable<T> GetAll();
+    IEnumerable<T> GetAllWithoutQueryFilters();
+    void SafeDelete(T entity);
 }

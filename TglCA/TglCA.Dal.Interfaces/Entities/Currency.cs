@@ -8,5 +8,4 @@ public class Currency : BaseEntity
     public string Name { get; set; }
     public string Symbol { get; set; }
     public byte[] Img { get; set; }
-    public bool IsDeleted { get; set; } = false;
 }

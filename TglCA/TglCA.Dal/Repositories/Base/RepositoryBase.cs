@@ -30,6 +30,22 @@ namespace TglCA.Dal.Repositories.Base
             return _dbSet;
         }
 
+        public IEnumerable<T> GetAllWithoutQueryFilters()
+        {
+            return _dbSet.IgnoreQueryFilters();
+        }
+
+        public void SafeDelete(T entity)
+        {
+            T? tEntity = GetById(entity.Id);
+            if (tEntity == null)
+            {
+                return;
+            }
+            tEntity.IsDeleted = true;
+            Update(tEntity);
+        }
+
         public T? GetById(int id)
         {
             return _dbSet.Find(id);
