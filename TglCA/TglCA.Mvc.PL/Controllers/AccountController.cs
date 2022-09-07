@@ -24,6 +24,13 @@ public class AccountController : Controller
     }
 
     [HttpGet]
+    public IActionResult GoogleAuthError()
+    {
+        ViewBag.Errors = TempData["Errors"];
+        return View();
+    }
+
+    [HttpGet]
     public IActionResult Register()
     {
         return View();
@@ -48,7 +55,7 @@ public class AccountController : Controller
             AddModelStateErrors(errModel);
             return View(userInputModel);
         }
-        
+
         return RedirectToAction(nameof(Successful));
     }
 
@@ -99,14 +106,16 @@ public class AccountController : Controller
 
         if (!errModel.IsSuccess)
         {
-            AddModelStateErrors(errModel);
-            return RedirectToAction("Login", "Account");
+            TempData["Errors"] = errModel.ErrorDetails
+                .Select(e => e.ErrorMessage)
+                .ToList();
+            return RedirectToAction(nameof(GoogleAuthError));
         }
 
         return RedirectToAction("ByMarketCap", "Main");
     }
 
-    public void AddModelStateErrors(ErrorModel errorModel)
+    private void AddModelStateErrors(ErrorModel errorModel)
     {
         foreach (var item in errorModel.ErrorDetails)
         {
