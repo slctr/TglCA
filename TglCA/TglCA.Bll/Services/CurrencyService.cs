@@ -1,4 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
@@ -69,24 +70,9 @@ public class CurrencyService : ICurrencyService
         Currency currency = _currencyMapper.ToCurrency(entity);
         _currencyRepository.CreateOrUpdate(currency);
     }
-
-    public IEnumerable<BllCurrency> GetAllByMarketCap()
+    public BllCurrency GetByCurrencyId(string currencyId)
     {
-        var allCurrencies = _currencyRepository
-            .GetAll()
-            .Select(c => _currencyMapper.ToBllCurrency(c))
-            .OrderByDescending(c => c.MarketCapUsd);
-
-        /*
-         Some API calls for bllCurrency
-         */
-
-        return allCurrencies;
-    }
-
-    public BllCurrency GetByCurrencyId(string id)
-    {
-        Currency? currency = _currencyRepository.GetByCurrencyId(id);
+        Currency? currency = _currencyRepository.GetByCurrencyId(currencyId);
         if (currency == null)
         {
             return null;
@@ -98,5 +84,15 @@ public class CurrencyService : ICurrencyService
          */
 
         return bllCurrency;
+    }
+
+    public List<ChartPoint<long, double>> GetCurrencyPriceHistory(string currencyId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ChartPoint<long, double> GetLatestPriceHistoryPoint(string currencyId)
+    {
+        throw new NotImplementedException();
     }
 }

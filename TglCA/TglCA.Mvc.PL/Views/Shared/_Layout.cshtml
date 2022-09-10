@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/TglCA.Mvc.PL.styles.css" asp-append-version="true"/>
+    @await RenderSectionAsync("Head", false)
 </head>
 <body>
 <header>
     <partial name="Partials/_Header"/>
 </header>
 <div class="d-flex align-items-center justify-content-center" id="mainFlex">
-    <div class="d-flex flex-column" id="mainContainer">
+    <div class="d-flex flex-column bg-light shadow mt-3 mb-3 bg-white rounded" id="mainContainer">
         @RenderBody()
     </div>
 </div>

@@ -1,7 +1,8 @@
-﻿using TglCA.Bll.Interfaces.Entities;
+﻿using TglCA.Bll.Helpers;
+using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
-using TglCA.Bll.Interfaces.IServices;
-using TglCA.Bll.Mappers;
+using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
 
 namespace TglCA.Bll.Services.Mock;
@@ -49,6 +50,7 @@ public class MockCurrencyService : ICurrencyService
                 GenerateMockBlValues(bllCurrency);
                 return bllCurrency;
             });
+        
         return currencies;
     }
 
@@ -57,21 +59,44 @@ public class MockCurrencyService : ICurrencyService
         _currencyRepository.CreateOrUpdate(_currencyMapper.ToCurrency(entity));
     }
 
-    public IEnumerable<BllCurrency> GetAllByMarketCap()
+    public BllCurrency GetByCurrencyId(string currencyId)
     {
-        var currencies = GetAll();
-        return currencies.OrderByDescending(c => c.MarketCapUsd);
+        Currency? currency = _currencyRepository.GetByCurrencyId(currencyId);
+        if (currency == null)
+        {
+            return null;
+        }
+
+        BllCurrency bllCurrency = _currencyMapper.ToBllCurrency(currency);
+        GenerateMockBlValues(bllCurrency);
+        return bllCurrency;
+    }
+
+    public List<ChartPoint<long, double>> GetCurrencyPriceHistory(string currencyId)
+    {
+        List<ChartPoint<long, double>> points = new List<ChartPoint<long, double>>();
+        Random random = new Random();
+        DateTime initialDate = DateTime.Today.AddMonths(-1);
+        while (initialDate != DateTime.Today)
+        {
+            points.Add(new ChartPoint<long, double>(initialDate.ToUnixTimestamp(),random.NextDouble()*1000));
+            initialDate = initialDate.AddDays(1);
+        }
+        return points;
+    }
+
+    public ChartPoint<long, double> GetLatestPriceHistoryPoint(string currencyId)
+    {
+        Random random = new Random();
+        ChartPoint<long, double> point = new(DateTimeHelper.UnixTimestampNow(), random.NextDouble() * 1000);
+        return point;
     }
 
     private void GenerateMockBlValues(BllCurrency bllCurrency)
     {
         var random = new Random();
-        bllCurrency.PercentChange1h = GetRandomPercentage();
         bllCurrency.PercentChange24h = GetRandomPercentage();
-        bllCurrency.PercentChange7d = GetRandomPercentage();
-        bllCurrency.MarketCapUsd = GetRandomDouble(10000);
         bllCurrency.Price = GetRandomDouble(100);
-        bllCurrency.Rank = random.Next(1, 1001);
         bllCurrency.Volume24hUsd = GetRandomDouble(1000);
 
         double GetRandomPercentage()

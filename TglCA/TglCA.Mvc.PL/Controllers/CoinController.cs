@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Mvc.PL.Models;
+using TglCA.Mvc.PL.Models.Mappers;
 
 namespace TglCA.Mvc.PL.Controllers
 {
@@ -15,7 +19,31 @@ namespace TglCA.Mvc.PL.Controllers
         [HttpGet("{Id}")]
         public IActionResult CoinInfo(string id)
         {
-            return View();
+            // TEST
+            CoinViewModel viewModel = new CoinViewModel()
+            {
+                Currency = _currencyService.GetByCurrencyId(id).ToViewModel()
+            };
+            return View(viewModel);
+        }
+        [HttpGet("{id}")]
+        public IActionResult CoinChartInitialValues(string id)
+        {
+            // TEST
+            Dictionary<string, List<ChartPoint<long, double>>> points = new();
+            points.Add("Market1Name", _currencyService.GetCurrencyPriceHistory("Market1Name"));
+            points.Add("Market2Name", _currencyService.GetCurrencyPriceHistory("Market2Name"));
+            points.Add("Market3Name", _currencyService.GetCurrencyPriceHistory("Market3Name"));
+
+            return Content(JsonConvert.SerializeObject(points));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult CoinChartGetCurrentValue(string id)
+        {
+            // TEST
+            ChartPoint<long, double> point = _currencyService.GetLatestPriceHistoryPoint(id);
+            return Content(JsonConvert.SerializeObject(point));
         }
     }
 }

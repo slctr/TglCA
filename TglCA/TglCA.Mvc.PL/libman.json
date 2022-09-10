@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "cryptocurrency-icons@0.18.1",
+      "destination": "wwwroot/icons"
+    }
+  ]
+}

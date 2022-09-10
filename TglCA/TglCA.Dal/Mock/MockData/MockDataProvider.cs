@@ -12,7 +12,6 @@ public class MockDataProvider
             Name = "Bitcoin",
             Symbol = "BTC",
             CurrencyId = "bitcoin",
-            Img = SetImg("bitcoin.png")
         },
         new()
         {
@@ -20,7 +19,6 @@ public class MockDataProvider
             Name = "Ethereum",
             Symbol = "ETH",
             CurrencyId = "ethereum",
-            Img = SetImg("ethereum.png")
         },
         new()
         {
@@ -28,7 +26,6 @@ public class MockDataProvider
             Name = "Tether",
             Symbol = "USDT",
             CurrencyId = "tether",
-            Img = SetImg("tether.png")
         },
         new()
         {
@@ -36,7 +33,6 @@ public class MockDataProvider
             Name = "USD Coin",
             Symbol = "USDC",
             CurrencyId = "usd_coin",
-            Img = SetImg("usd_coin.png")
         },
         new()
         {
@@ -44,7 +40,6 @@ public class MockDataProvider
             Name = "Binance USD",
             Symbol = "BUSD",
             CurrencyId = "binance_usd",
-            Img = SetImg("binance_usd.png")
         }
     };
 
@@ -56,16 +51,5 @@ public class MockDataProvider
         var currencies = new List<Currency>();
         for (var i = 0; i < count; ++i) currencies.Add(referenceCurrencies[random.Next(0, 5)]);
         return currencies;
-    }
-
-    private static byte[] SetImg(string imgName)
-    {
-        var imagepath = Directory.GetCurrentDirectory() + $@"\Img\{imgName}";
-        using (var fs = new FileStream(imagepath, FileMode.Open))
-        {
-            var byData = new byte[fs.Length];
-            fs.Read(byData, 0, byData.Length);
-            return byData;
-        }
     }
 }

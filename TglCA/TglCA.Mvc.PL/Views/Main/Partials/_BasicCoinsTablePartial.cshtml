@@ -4,9 +4,6 @@
     <table class="table table-borderless" style="overflow-y: hidden;">
         <thead>
         <tr>
-            <th scope="col">
-                #
-            </th>
             <th scope="col" style="text-align: left">
                 Coin
             </th>
@@ -14,48 +11,34 @@
                 Price
             </th>
             <th scope="col">
-                1h
-            </th>
-            <th scope="col">
                 24h
-            </th>
-            <th scope="col">
-                7d
             </th>
             <th scope="col">
                 24h Volume
             </th>
-            <th scope="col">
-                Mkt Cap
-            </th>
         </tr>
         </thead>
         <tbody>
-        @for (var i = 0; i < Model.Count(); ++i)
+        @foreach(var currency in @Model)
         {
             <tr>
                 <td>
-                    <div class="tableContentContainer">
-                        <p class="tableText">@(i + 1)</p>
-                    </div>
-                </td>
-                <td>
                     <div id="tableContentCoinContainer">
-                        <img class="coinIcon" src="@Model[i].Img"/>
-                        @Html.ActionLink(Model[i].Name, "CoinPage", "Coin", null, new { @class = "navButton" })
-                        <p class="symbolText">@Model[i].Symbol</p>
+                        <img class="coinIcon" src="@currency.Img"/>
+                        @Html.ActionLink(currency.Name, "CoinInfo", "Coin", new{id=@currency.CurrencyId}, new { @class = "navButton" })
+                        <p class="symbolText">@currency.Symbol</p>
                     </div>
                 </td>
                 <td>
                     <div class="tableContentContainer">
-                        <p class="tableText">$@Model[i].Price</p>
+                        <p class="tableText">$@currency.Price</p>
                     </div>
                 </td>
-                @if (Model[i].PercentChange1h < 0)
+                @if (currency.PercentChange24h < 0)
                 {
                     <td>
                         <div class="tableContentContainer">
-                            <p class="tableText text-danger">@Model[i].PercentChange1h%</p>
+                            <p class="tableText text-danger">@currency.PercentChange24h%</p>
                         </div>
                     </td>
                 }
@@ -63,50 +46,13 @@
                 {
                     <td>
                         <div class="tableContentContainer">
-                            <p class="tableText text-success">@Model[i].PercentChange1h%</p>
-                        </div>
-                    </td>
-                }
-                @if (Model[i].PercentChange24h < 0)
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-danger">@Model[i].PercentChange24h%</p>
-                        </div>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-success">@Model[i].PercentChange24h%</p>
-                        </div>
-                    </td>
-                }
-                @if (Model[i].PercentChange7d < 0)
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-danger">@Model[i].PercentChange7d%</p>
-                        </div>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-success">@Model[i].PercentChange7d%</p>
+                            <p class="tableText text-success">@currency.PercentChange24h%</p>
                         </div>
                     </td>
                 }
                 <td>
                     <div class="tableContentContainer">
-                        <p class="tableText">$@Model[i].Volume24hUsd</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="tableContentContainer">
-                        <p class="tableText">$@Model[i].MarketCapUsd</p>
+                        <p class="tableText">$@currency.Volume24hUsd</p>
                     </div>
                 </td>
             </tr>

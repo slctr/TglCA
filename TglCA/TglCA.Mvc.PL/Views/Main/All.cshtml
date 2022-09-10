@@ -1,0 +1,10 @@
+﻿@using TglCA.Mvc.PL.Views.Shared
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IPagedList<CurrencyViewModel>
+<div class="align-self-center" id="infoContainer">
+    <h3 class="mt-1">Cryptocurrencies</h3>
+</div>
+<partial name="Partials/_BasicCoinsTablePartial" model="@Model"/>
+@Html.PagedListPager(Model, page => Url.Action("All",
+    new { page }),
+    PagedListOptions.options)

@@ -82,13 +82,13 @@ public class AccountController : Controller
             return View(userInputModel);
         }
 
-        return RedirectToAction("ByMarketCap", "Main");
+        return RedirectToAction("All", "Main");
     }
 
     public async ValueTask<IActionResult> LogOut()
     {
         await _userService.SignOutAsync();
-        return RedirectToAction("ByMarketCap", "Main");
+        return RedirectToAction("All", "Main");
     }
 
     [AllowAnonymous]
@@ -112,7 +112,7 @@ public class AccountController : Controller
             return RedirectToAction(nameof(GoogleAuthError));
         }
 
-        return RedirectToAction("ByMarketCap", "Main");
+        return RedirectToAction("All", "Main");
     }
 
     private void AddModelStateErrors(ErrorModel errorModel)

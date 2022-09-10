@@ -23,9 +23,9 @@ public class MainController : Controller
 
     [Route("/")]
     [HttpGet("{pageNumber}")]
-    public IActionResult ByMarketCap(int? page)
+    public IActionResult All(int? page)
     {
-        var currencies = _currencyService.GetAllByMarketCap();
+        var currencies = _currencyService.GetAll();
         var pageSize = page ?? 1;
         return View(GetPagedViewModel(currencies, pageSize, GetPageSize()));
     }

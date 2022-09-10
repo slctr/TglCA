@@ -70,7 +70,9 @@ tr { border-bottom: #dee2e6 1px solid; }
     display: flex;
     flex-direction: row;
 }
-
+#mainHeaderContainer {
+    width: 70%
+}
 .tableContentContainer {
     align-items: center;
     display: flex;
@@ -80,7 +82,63 @@ tr { border-bottom: #dee2e6 1px solid; }
 }
 
 .tableText { margin-bottom: 0; }
+.coinIconBig {
+    height: 30px;
+    margin-right: 1rem;
+    width: 30px;
+}
+#coinInfoName {
+    margin-bottom: 0.25rem;
+}
+#coinInfoRankContainer {
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+}
+#coinInfoRank {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 0;
+}
 
-#logoHeader { color: black }
+#logoHeader {
+    color: black
+}
 
-#tableContainer { min-width: 95vw; }
+#tableContainer {
+     min-width: 70vw;
+}
+#mainCoinInfoContainer {
+    min-width: 70vw;
+}
+#coinInfoCompareTo {
+    color: gray;
+}
+#coinInfoCurrencyStatistics {
+    min-width: 50%;
+    background-color: #e9e9e9;
+    border-radius: 10px;
+}
+.coinStatContainer {
+    min-width: 20%;
+}
+.currencyStatColumn {
+    min-width: 45%;
+    justify-content: space-around;
+    margin: 1rem;
+}
+.coinStatTextName {
+    margin: 0;
+    color: gray;
+}
+.coinStatTextValue {
+    margin: 0;
+}
+#chartContainer {
+    min-width: 70vw;
+    min-height: 30vh;
+    margin: 2rem;
+}
+#coinInfoCurrencyNamePrice {
+    width: 80%;
+}

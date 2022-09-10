@@ -12,7 +12,6 @@ public class BllCurrency : BllEntityBase
     private double _price;
     private double _volume24hUsd;
     public string CurrencyId { get; set; }
-    public byte[] Img { get; set; }
     public int Rank { get; set; }
     public string Name { get; set; }
     public string Symbol { get; set; }
@@ -61,7 +60,11 @@ public class BllCurrency : BllEntityBase
 
     public string GetImageSrc()
     {
-        return $"data:image/jpg;base64,{Convert.ToBase64String(Img)}";
+        if (!File.Exists(Environment.CurrentDirectory + $@"\wwwroot\icons\32\color\{Symbol.ToLower()}.png"))
+        {
+            return "../../icons/32/color/generic.png";
+        }
+        return $"../../icons/32/color/{Symbol.ToLower()}.png";
     }
 
     private double RoundPercentage(double input)

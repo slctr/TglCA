@@ -14,7 +14,6 @@ public class CurrencyMapper : ICurrencyMapper
             Name = currency.Name,
             CurrencyId = currency.CurrencyId,
             Symbol = currency.Symbol,
-            Img = currency.Img
         };
     }
 
@@ -25,8 +24,7 @@ public class CurrencyMapper : ICurrencyMapper
             Id = bllCurrency.Id,
             Name = bllCurrency.Name,
             CurrencyId = bllCurrency.CurrencyId,
-            Symbol = bllCurrency.Symbol,
-            Img = bllCurrency.Img
+            Symbol = bllCurrency.Symbol
         };
     }
 }
