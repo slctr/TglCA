@@ -8,13 +8,11 @@ public static class CurrencyModelMapperExtension
     {
         return new CurrencyViewModel
         {
-            CurrencyId = bllCurrency.CurrencyId,
             Img = bllCurrency.GetImageSrc(),
-            Name = bllCurrency.Name,
+            AssetName = bllCurrency.AssetName,
             PercentChange24h = bllCurrency.PercentChange24h,
             Volume24hUsd = bllCurrency.Volume24hUsd,
             Price = bllCurrency.Price,
-            Rank = bllCurrency.Rank,
             Symbol = bllCurrency.Symbol
         };
     }

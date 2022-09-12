@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TglCA.Bll.Api.Aggregator;
+using TglCA.Bll.Api.Aggregator.Interfaces;
 using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Mappers;
 using TglCA.Bll.Services;
@@ -8,6 +10,7 @@ using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories;
 using TglCA.Dal.Mock.MockRepositories;
+using TglCA.Dal.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,8 +63,9 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     }
 );
-builder.Services.AddTransient<ICurrencyRepository, MockCurrencyRepository>();
-builder.Services.AddTransient<ICurrencyService, MockCurrencyService>();
+builder.Services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+builder.Services.AddTransient<ICoinAggregator, CoinAggregator>();
+builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 builder.Services.AddTransient<ICurrencyMapper, CurrencyMapper>();
 builder.Services.AddTransient<IUserService, UserService>();
 

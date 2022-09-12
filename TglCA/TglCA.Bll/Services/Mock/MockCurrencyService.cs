@@ -33,81 +33,82 @@ public class MockCurrencyService : ICurrencyService
         _currencyRepository.Delete(_currencyMapper.ToCurrency(entity));
     }
 
-    public BllCurrency GetById(int id)
-    {
-        var bllCurrency = _currencyMapper.ToBllCurrency(_currencyRepository.GetById(id));
-        GenerateMockBlValues(bllCurrency);
-        return bllCurrency;
-    }
+    //public BllCurrency GetById(int id)
+    //{
+    //    var bllCurrency = _currencyMapper.ToBllCurrency(_currencyRepository.GetById(id));
+    //    GenerateMockBlValues(bllCurrency);
+    //    return bllCurrency;
+    //}
 
-    public IEnumerable<BllCurrency> GetAll()
-    {
-        var currencies = _currencyRepository
-            .GetAll()
-            .Select(c =>
-            {
-                var bllCurrency = _currencyMapper.ToBllCurrency(c);
-                GenerateMockBlValues(bllCurrency);
-                return bllCurrency;
-            });
-        
-        return currencies;
-    }
+    //public IEnumerable<BllCurrency> GetAll()
+    //{
+    //    var currencies = _currencyRepository
+    //        .GetAll()
+    //        .Select(c =>
+    //        {
+    //            var bllCurrency = _currencyMapper.ToBllCurrency(c);
+    //            GenerateMockBlValues(bllCurrency);
+    //            return bllCurrency;
+    //        });
+    //    return currencies;
+    //}
 
     public void CreateOrUpdate(BllCurrency entity)
     {
         _currencyRepository.CreateOrUpdate(_currencyMapper.ToCurrency(entity));
     }
 
-    public BllCurrency GetByCurrencyId(string currencyId)
-    {
-        Currency? currency = _currencyRepository.GetByCurrencyId(currencyId);
-        if (currency == null)
-        {
-            return null;
-        }
+    //public IEnumerable<BllCurrency> GetAllByMarketCap()
+    //{
+    //    var currencies = GetAll();
+    //    return currencies.OrderByDescending(c => c.MarketCapUsd);
+    //}
 
-        BllCurrency bllCurrency = _currencyMapper.ToBllCurrency(currency);
-        GenerateMockBlValues(bllCurrency);
-        return bllCurrency;
+    //private void GenerateMockBlValues(BllCurrency bllCurrency)
+    //{
+    //    var random = new Random();
+    //    bllCurrency.PercentChange1h = GetRandomPercentage();
+    //    bllCurrency.PercentChange24h = GetRandomPercentage();
+    //    bllCurrency.PercentChange7d = GetRandomPercentage();
+    //    bllCurrency.MarketCapUsd = GetRandomDouble(10000);
+    //    bllCurrency.Price = GetRandomDouble(100);
+    //    bllCurrency.Rank = random.Next(1, 1001);
+    //    bllCurrency.Volume24hUsd = GetRandomDouble(1000);
+
+    //    double GetRandomPercentage()
+    //    {
+    //        var percentageSign = new[] { -1, 1 };
+    //        return random.NextDouble() * 10 * percentageSign[random.Next(0, 2)];
+    //    }
+
+    //    double GetRandomDouble(int multiply)
+    //    {
+    //        return random.NextDouble() * multiply;
+    //    }
+    //}
+
+    public Task<IEnumerable<BllCurrency>> GetAllByVolume()
+    {
+        throw new NotImplementedException();
     }
 
-    public List<ChartPoint<long, double>> GetCurrencyPriceHistory(string currencyId)
+    public Task<Dictionary<string, BllCurrency>> GetByMarketId(string symbol)
     {
-        List<ChartPoint<long, double>> points = new List<ChartPoint<long, double>>();
-        Random random = new Random();
-        DateTime initialDate = DateTime.Today.AddMonths(-1);
-        while (initialDate != DateTime.Today)
-        {
-            points.Add(new ChartPoint<long, double>(initialDate.ToUnixTimestamp(),random.NextDouble()*1000));
-            initialDate = initialDate.AddDays(1);
-        }
-        return points;
+        throw new NotImplementedException();
     }
 
-    public ChartPoint<long, double> GetLatestPriceHistoryPoint(string currencyId)
+    public Task<IEnumerable<BllCurrency>> GetAllAsync()
     {
-        Random random = new Random();
-        ChartPoint<long, double> point = new(DateTimeHelper.UnixTimestampNow(), random.NextDouble() * 1000);
-        return point;
+        throw new NotImplementedException();
     }
 
-    private void GenerateMockBlValues(BllCurrency bllCurrency)
+    public BllCurrency GetById(int id)
     {
-        var random = new Random();
-        bllCurrency.PercentChange24h = GetRandomPercentage();
-        bllCurrency.Price = GetRandomDouble(100);
-        bllCurrency.Volume24hUsd = GetRandomDouble(1000);
+        throw new NotImplementedException();
+    }
 
-        double GetRandomPercentage()
-        {
-            var percentageSign = new[] { -1, 1 };
-            return random.NextDouble() * 10 * percentageSign[random.Next(0, 2)];
-        }
-
-        double GetRandomDouble(int multiply)
-        {
-            return random.NextDouble() * multiply;
-        }
+    public Task<IEnumerable<BllCurrency>> GetAllByPrice()
+    {
+        throw new NotImplementedException();
     }
 }
