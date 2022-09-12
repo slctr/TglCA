@@ -4,6 +4,10 @@ namespace TglCA.Bll.Api.Aggregator.Interfaces
 {
     public interface ICoinAggregator
     {
-        //IReadOnlyCollection<BllCurrency> GetBllCurrencies();
+        Task<IEnumerable<BllCurrency>> GetAggregatedCurrencies();
+
+        Task<Dictionary<string, BllCurrency>> GetAggregatedCurrency(string symbol);
+
+        Task<Dictionary<string, IEnumerable<ChartData>>> GetAggregatedChart(string symbol);
     }
 }

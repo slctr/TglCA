@@ -11,22 +11,16 @@
                 Coin
             </th>
             <th scope="col">
-                Price
+                Symbol
             </th>
             <th scope="col">
-                1h
+                Price
             </th>
             <th scope="col">
                 24h
             </th>
             <th scope="col">
-                7d
-            </th>
-            <th scope="col">
                 24h Volume
-            </th>
-            <th scope="col">
-                Mkt Cap
             </th>
         </tr>
         </thead>
@@ -40,10 +34,13 @@
                     </div>
                 </td>
                 <td>
-                    <div id="tableContentCoinContainer">
-                        <img class="coinIcon" src="@Model[i].Img"/>
-                        @Html.ActionLink(Model[i].Name, "CoinPage", "Coin", null, new { @class = "navButton" })
-                        <p class="symbolText">@Model[i].Symbol</p>
+                    <div class="tableContentContainer">
+                        <p class="tableText">@Model[i].AssetName</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="tableContentContainer">
+                        <p class="tableText">@Model[i].Symbol</p>
                     </div>
                 </td>
                 <td>
@@ -51,22 +48,7 @@
                         <p class="tableText">$@Model[i].Price</p>
                     </div>
                 </td>
-                @if (Model[i].PercentChange1h < 0)
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-danger">@Model[i].PercentChange1h%</p>
-                        </div>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-success">@Model[i].PercentChange1h%</p>
-                        </div>
-                    </td>
-                }
+                
                 @if (Model[i].PercentChange24h < 0)
                 {
                     <td>
@@ -83,30 +65,9 @@
                         </div>
                     </td>
                 }
-                @if (Model[i].PercentChange7d < 0)
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-danger">@Model[i].PercentChange7d%</p>
-                        </div>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <div class="tableContentContainer">
-                            <p class="tableText text-success">@Model[i].PercentChange7d%</p>
-                        </div>
-                    </td>
-                }
                 <td>
                     <div class="tableContentContainer">
                         <p class="tableText">$@Model[i].Volume24hUsd</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="tableContentContainer">
-                        <p class="tableText">$@Model[i].MarketCapUsd</p>
                     </div>
                 </td>
             </tr>

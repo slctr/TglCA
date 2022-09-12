@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TglCA.Bll.Api.Aggregator.Interfaces\TglCA.Bll.Api.Aggregator.Interfaces.csproj" />
     <ProjectReference Include="..\TglCA.Bll.Api\TglCA.Bll.Api.csproj" />
     <ProjectReference Include="..\TglCA.Bll.Interfaces\TglCA.Bll.Interfaces.csproj" />
     <ProjectReference Include="..\TglCA.Dal.Interfaces\TglCA.Dal.Interfaces.csproj" />

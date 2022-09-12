@@ -4,22 +4,22 @@ namespace TglCA.Bll.Interfaces.Entities;
 
 public class BllCurrency : BllEntityBase
 {
-    private double _marketCapUsd;
-
-    private double _percentageChange1h;
-    private double _percentageChange24h;
-    private double _percentageChange7d;
-    private double _price;
-    private double _volume24hUsd;
-    public string CurrencyId { get; set; }
-    public byte[] Img { get; set; }
-    public int Rank { get; set; }
-    public string Name { get; set; }
+    private decimal _percentageChange24h;
+    private decimal _price;
+    private decimal _volume24hUsd;
+    public string AssetName { get; set; }
     public string Symbol { get; set; }
 
-    public double Price
+    public decimal Price
     {
-        get => RoundToTwo(_price);
+        get
+        {
+            if (_price >= 1)
+            {
+                return Math.Round(_price, 3);
+            }
+            return Math.Round(_price, 8);
+        }
         set
         {
             if (value > 0)
@@ -29,48 +29,20 @@ public class BllCurrency : BllEntityBase
         }
     }
 
-    public double PercentChange1h
-    {
-        get => RoundPercentage(_percentageChange1h);
-        set => _percentageChange1h = value;
-    }
-
-    public double PercentChange24h
+    public decimal PercentChange24h
     {
         get => RoundPercentage(_percentageChange24h);
         set => _percentageChange24h = value;
     }
 
-    public double PercentChange7d
+    public decimal Volume24hUsd
     {
-        get => RoundPercentage(_percentageChange7d);
-        set => _percentageChange7d = value;
-    }
-
-    public double Volume24hUsd
-    {
-        get => RoundToTwo(_volume24hUsd);
+        get => Math.Round(_volume24hUsd, 3);
         set => _volume24hUsd = value;
     }
 
-    public double MarketCapUsd
+    private decimal RoundPercentage(decimal input)
     {
-        get => RoundToTwo(_marketCapUsd);
-        set => _marketCapUsd = value;
-    }
-
-    public string GetImageSrc()
-    {
-        return $"data:image/jpg;base64,{Convert.ToBase64String(Img)}";
-    }
-
-    private double RoundPercentage(double input)
-    {
-        return Math.Round(input, 1);
-    }
-
-    private double RoundToTwo(double input)
-    {
-        return Math.Round(input, 2);
+        return Math.Round(input, 3);
     }
 }
