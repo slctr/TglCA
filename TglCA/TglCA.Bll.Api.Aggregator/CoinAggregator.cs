@@ -66,7 +66,8 @@ namespace TglCA.Bll.Api.Aggregator
 
             for (int i = 0; i < list.Length; i++)
             {
-                result.Add(providers[i].GetProviderName(), list[i]);
+                if (list[i] != null)
+                    result.Add(providers[i].GetProviderName(), list[i]);
             }
             return result;
         }
@@ -82,13 +83,15 @@ namespace TglCA.Bll.Api.Aggregator
 
             var list = await Task.WhenAll(tasks);
 
+            var notNullList = list.Where(x => x != null);
+
             return new BllCurrency()
             {
-                Symbol = list.First().Symbol,
-                AssetName = list.First().AssetName,
-                Price = list.Average(x => x.Price),
-                PercentChange24h = list.Average(x => x.PercentChange24h),
-                Volume24hUsd = list.Average(x => x.Volume24hUsd)
+                Symbol = notNullList.First().Symbol,
+                AssetName = notNullList.First().AssetName,
+                Price = notNullList.Average(x => x.Price),
+                PercentChange24h = notNullList.Average(x => x.PercentChange24h),
+                Volume24hUsd = notNullList.Average(x => x.Volume24hUsd)
             };
         }
 

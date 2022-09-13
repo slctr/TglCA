@@ -67,6 +67,13 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
             var currencyName = task1.Result.Data.FirstOrDefault(x => x.Name.Equals(symbol));
             var currencyStats = task2.Result;
 
+            if (currencyName == null ||
+                currencyStats.Data == null ||
+                currencyStats.Data.LastPrice == 0)
+            {
+                return null;
+            }
+
             return new BllCurrency()
             {
                 AssetName = currencyName.FullName,

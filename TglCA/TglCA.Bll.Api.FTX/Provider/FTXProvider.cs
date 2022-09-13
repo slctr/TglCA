@@ -64,6 +64,12 @@ namespace TglCA.Bll.Api.FTX.Provider
             var currencyName = task1.Result.Data.FirstOrDefault(x => x.Name.Equals(symbol));
             var currencyStats = task2.Result;
 
+            if (currencyName == null ||
+                currencyStats.Data.CurrentPrice == null)
+            {
+                return null;
+            }
+
             return new BllCurrency()
             {
                 AssetName = currencyName.FullName,

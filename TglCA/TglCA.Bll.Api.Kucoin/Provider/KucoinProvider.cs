@@ -64,6 +64,12 @@ namespace TglCA.Bll.Api.Kucoin.Provider
             var currencyName = task1.Result;
             var currencyStats = task2.Result;
 
+            if (currencyName == null ||
+                currencyStats.Data.LastPrice == null)
+            {
+                return null;
+            }
+
             return new BllCurrency()
             {
                 AssetName = currencyName.Data.FullName,
