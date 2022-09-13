@@ -22,7 +22,6 @@ public class MockCurrencyRepository : ICurrencyRepository
             return;
         }
         currency.Name = entity.Name;
-        currency.CurrencyId = entity.CurrencyId;
         currency.Symbol = entity.Symbol;
     }
 
@@ -76,6 +75,6 @@ public class MockCurrencyRepository : ICurrencyRepository
     {
         return _provider.Currencies
             .Where(c => !c.IsDeleted)
-            .FirstOrDefault(c => c.CurrencyId == currencyId);
+            .FirstOrDefault(c => c.Symbol == currencyId);
     }
 }

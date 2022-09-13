@@ -2,6 +2,8 @@
 using Kucoin.Net.Enums;
 using TglCA.Bll.Api.Providers;
 using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
+using TglCA.Utils;
 
 namespace TglCA.Bll.Api.Kucoin.Provider
 {
@@ -72,17 +74,16 @@ namespace TglCA.Bll.Api.Kucoin.Provider
             };
         }
 
-        public override async Task<IEnumerable<ChartData>> GetHistoricalDataAsync(string symbol)
+        public override async Task<IEnumerable<ChartPoint<long, decimal>>> GetHistoricalDataAsync(string symbol)
         {
             var chart = await kucoinClient.SpotApi.ExchangeData.GetKlinesAsync(symbol + QuoteAsset,
-                KlineInterval.OneHour,
-                DateTime.Now.AddDays(-7));
+                KlineInterval.OneMinute,
+                DateTime.Now.AddDays(-1));
 
-            var result = chart.Data.Select(x => new ChartData()
-            {
-                Price = x.ClosePrice,
-                Time = x.OpenTime
-            });
+            var result = chart.Data
+                .Select(x => new ChartPoint<long, decimal>(
+                    DateTimeHelper.ToUnixTimestamp(x.OpenTime),
+                    x.ClosePrice));
 
             return result;
         }

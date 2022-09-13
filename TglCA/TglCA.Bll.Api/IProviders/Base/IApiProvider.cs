@@ -1,4 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
 
 namespace TglCA.Bll.Api.IProviders.Base
 {
@@ -8,7 +9,7 @@ namespace TglCA.Bll.Api.IProviders.Base
 
         Task<BllCurrency> GetCurrencyAsync(string symbol);
 
-        Task<IEnumerable<ChartData>> GetHistoricalDataAsync(string symbol);
+        Task<IEnumerable<ChartPoint<long, decimal>>> GetHistoricalDataAsync(string symbol);
 
         string GetProviderName();
     }

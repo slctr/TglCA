@@ -8,9 +8,6 @@
                 Coin
             </th>
             <th scope="col">
-                Symbol
-            </th>
-            <th scope="col">
                 Price
             </th>
             <th scope="col">
@@ -28,14 +25,14 @@
                 <td>
                     <div id="tableContentCoinContainer">
                         <img class="coinIcon" src="@currency.Img"/>
-                        @Html.ActionLink(currency.Name, "CoinInfo", "Coin", new{id=@currency.CurrencyId}, new { @class = "navButton" })
+                        @Html.ActionLink(currency.AssetName, "CoinInfo", "Coin", new{id=@currency.Symbol}, new { @class = "navButton" })
                         <p class="symbolText">@currency.Symbol</p>
                     </div>
                 </td>
                 <td>
                     <div class="tableContentContainer">
-                        <p class="tableText">@Model[i].AssetName</p>
-                        <p class="tableText">$@currency.Price</p>
+                        <p class="tableText">$@currency.Price.ToString("N2")</p>
+                       
                     </div>
                 </td>
                 @if (currency.PercentChange24h < 0)
@@ -56,7 +53,7 @@
                 }
                 <td>
                     <div class="tableContentContainer">
-                        <p class="tableText">$@currency.Volume24hUsd</p>
+                        <p class="tableText">$@currency.Volume24hUsd.ToString("N2")</p>
                     </div>
                 </td>
             </tr>

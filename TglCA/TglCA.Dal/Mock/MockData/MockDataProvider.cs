@@ -11,35 +11,30 @@ public class MockDataProvider
             Id = 1,
             Name = "Bitcoin",
             Symbol = "BTC",
-            CurrencyId = "bitcoin",
         },
         new()
         {
             Id = 2,
             Name = "Ethereum",
             Symbol = "ETH",
-            CurrencyId = "ethereum",
         },
         new()
         {
             Id = 3,
             Name = "Tether",
             Symbol = "USDT",
-            CurrencyId = "tether",
         },
         new()
         {
             Id = 4,
             Name = "USD Coin",
             Symbol = "USDC",
-            CurrencyId = "usd_coin",
         },
         new()
         {
             Id = 5,
             Name = "Binance USD",
             Symbol = "BUSD",
-            CurrencyId = "binance_usd",
         }
     };
 

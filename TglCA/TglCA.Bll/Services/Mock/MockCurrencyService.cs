@@ -1,8 +1,6 @@
-﻿using TglCA.Bll.Helpers;
-using TglCA.Bll.Interfaces.Entities;
+﻿using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
-using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.IRepositories;
 
 namespace TglCA.Bll.Services.Mock;
@@ -108,6 +106,16 @@ public class MockCurrencyService : ICurrencyService
     }
 
     public Task<IEnumerable<BllCurrency>> GetAllByPrice()
+    {
+        throw new NotImplementedException();
+    }
+
+    public BllCurrency GetByCurrencyId(string currencyId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetCurrencyPriceHistory(string currencyId)
     {
         throw new NotImplementedException();
     }

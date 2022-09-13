@@ -91,4 +91,10 @@ public class CurrencyService : ICurrencyService
     {
         return await _coinAggregator.GetAggregatedCurrency(id);
     }
+
+    public async Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetCurrencyPriceHistory(string currencyId)
+    {
+        var result = await _coinAggregator.GetAggregatedChart(currencyId);
+        return result;
+    }
 }

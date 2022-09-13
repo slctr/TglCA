@@ -4,7 +4,7 @@ using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Api.Bitfinex.Provider;
 using TglCA.Bll.Api.FTX.Provider;
 using TglCA.Bll.Api.Kucoin.Provider;
-
+using TglCA.Bll.Interfaces.Entities.Chart;
 
 namespace TglCA.Bll.Api.Aggregator
 {
@@ -71,9 +71,9 @@ namespace TglCA.Bll.Api.Aggregator
             return result;
         }
 
-        public async Task<Dictionary<string, IEnumerable<ChartData>>> GetAggregatedChart(string symbol)
+        public async Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetAggregatedChart(string symbol)
         {
-            var tasks = new List<Task<IEnumerable<ChartData>>>();
+            var tasks = new List<Task<IEnumerable<ChartPoint<long, decimal>>>>();
 
             foreach (var p in providers)
             {
@@ -82,7 +82,7 @@ namespace TglCA.Bll.Api.Aggregator
 
             var lists = await Task.WhenAll(tasks);
 
-            var result = new Dictionary<string, IEnumerable<ChartData>>();
+            var result = new Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>();
 
             for (int i = 0; i < lists.Length; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
 
 namespace TglCA.Bll.Api.Aggregator.Interfaces
 {
@@ -8,6 +9,6 @@ namespace TglCA.Bll.Api.Aggregator.Interfaces
 
         Task<Dictionary<string, BllCurrency>> GetAggregatedCurrency(string symbol);
 
-        Task<Dictionary<string, IEnumerable<ChartData>>> GetAggregatedChart(string symbol);
+        Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetAggregatedChart(string symbol);
     }
 }

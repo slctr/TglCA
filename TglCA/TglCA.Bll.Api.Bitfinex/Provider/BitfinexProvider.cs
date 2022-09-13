@@ -2,6 +2,8 @@
 using Bitfinex.Net.Enums;
 using TglCA.Bll.Api.Providers;
 using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
+using TglCA.Utils;
 
 namespace TglCA.Bll.Api.Bitfinex.Provider
 {
@@ -47,8 +49,9 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
                              AssetName = x.FullName,
                              Symbol = x.Name,
                              Price = y.LastPrice,
-                             Volume24hUsd = y.Volume,
+                             Volume24hUsd = y.LastPrice >= 1 ? y.Volume / y.LastPrice : y.Volume * y.LastPrice,
                              PercentChange24h = y.DailyChangePercentage
+
                          };
 
             return result;
@@ -74,19 +77,18 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
             };
         }
 
-        public override async Task<IEnumerable<ChartData>> GetHistoricalDataAsync(string symbol)
+        public override async Task<IEnumerable<ChartPoint<long, decimal>>> GetHistoricalDataAsync(string symbol)
         {
             var chart = await bitfinexClient.SpotApi.ExchangeData.GetKlinesAsync("t" + symbol + QuoteAsset,
-                KlineInterval.OneHour,
+                KlineInterval.OneMinute,
                 null,
                 250,
-                DateTime.Now.AddDays(-7));
+                DateTime.Now.AddDays(-1));
 
-            var result = chart.Data.Select(x => new ChartData()
-            {
-                Price = x.ClosePrice,
-                Time = x.OpenTime
-            });
+            var result = chart.Data
+                .Select(x => new ChartPoint<long, decimal>(
+                    DateTimeHelper.ToUnixTimestamp(x.OpenTime),
+                    x.ClosePrice));
 
             return result;
         }

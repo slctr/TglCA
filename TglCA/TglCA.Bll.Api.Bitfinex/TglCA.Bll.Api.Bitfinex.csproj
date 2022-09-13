@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TglCA.Bll.Api\TglCA.Bll.Api.csproj" />
+    <ProjectReference Include="..\TglCA.Utils\TglCA.Utils.csproj" />
+    
   </ItemGroup>
 
 </Project>

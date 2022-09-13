@@ -12,7 +12,7 @@ public class CurrencyRepository : RepositoryBase<Currency>,ICurrencyRepository
     }
     public void CreateOrUpdate(Currency entity)
     {
-        Currency? currency = _dbSet.FirstOrDefault(c => c.CurrencyId == entity.CurrencyId);
+        Currency? currency = _dbSet.FirstOrDefault(c => c.Symbol == entity.Symbol);
         if (currency == null)
         {
             Create(entity);
@@ -23,6 +23,6 @@ public class CurrencyRepository : RepositoryBase<Currency>,ICurrencyRepository
 
     public Currency? GetByCurrencyId(string currencyId)
     {
-        return _dbSet.FirstOrDefault(c => c.CurrencyId == currencyId);
+        return _dbSet.FirstOrDefault(c => c.Symbol == currencyId);
     }
 }

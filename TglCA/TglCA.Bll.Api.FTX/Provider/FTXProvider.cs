@@ -2,12 +2,14 @@
 using FTX.Net.Enums;
 using TglCA.Bll.Api.Providers;
 using TglCA.Bll.Interfaces.Entities;
+using TglCA.Bll.Interfaces.Entities.Chart;
+using TglCA.Utils;
 
 namespace TglCA.Bll.Api.FTX.Provider
 {
     public class FTXProvider : ApiProvider
     {
-        private readonly string QuoteAsset = "USDT";
+        private readonly string QuoteAsset = "USD";
 
         public readonly FTXClient ftxClient;
 
@@ -72,20 +74,18 @@ namespace TglCA.Bll.Api.FTX.Provider
             };
         }
 
-        public override async Task<IEnumerable<ChartData>> GetHistoricalDataAsync(string symbol)
+        public override async Task<IEnumerable<ChartPoint<long, decimal>>> GetHistoricalDataAsync(string symbol)
         {
             var chart = await ftxClient.TradeApi.ExchangeData.GetKlinesAsync(symbol + "/" + QuoteAsset,
-                KlineInterval.OneHour,
-                DateTime.Now.AddDays(-7));
+                KlineInterval.OneMinute,
+                DateTime.Now.AddDays(-1));
 
             var result = chart.Data
-                .Select(x => new ChartData()
-                {
-                    Price = x.ClosePrice,
-                    Time = x.OpenTime
-                });
+                .Select(x => new ChartPoint<long, decimal>(
+                    DateTimeHelper.ToUnixTimestamp(x.OpenTime),
+                    x.ClosePrice));
 
-            result = result.OrderByDescending(x => x.Time);
+            result = result.OrderByDescending(x => x.X);
 
             return result;
         }

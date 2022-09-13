@@ -23,7 +23,7 @@ public class MainController : Controller
 
     [Route("/")]
     [HttpGet("{pageNumber}")]
-    public async Task<IActionResult> ByMarketCap(int? page)
+    public async Task<IActionResult> All(int? page)
     {
         var currencies = await _currencyService.GetAllByVolume();
         var pageSize = page ?? 1;

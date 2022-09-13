@@ -27,13 +27,15 @@ namespace TglCA.Mvc.PL.Controllers
             return View(viewModel);
         }
         [HttpGet("{id}")]
-        public IActionResult CoinChartInitialValues(string id)
+        public async Task<IActionResult> CoinChartInitialValues(string id)
         {
             // TEST
-            Dictionary<string, List<ChartPoint<long, double>>> points = new();
-            points.Add("Market1Name", _currencyService.GetCurrencyPriceHistory("Market1Name"));
-            points.Add("Market2Name", _currencyService.GetCurrencyPriceHistory("Market2Name"));
-            points.Add("Market3Name", _currencyService.GetCurrencyPriceHistory("Market3Name"));
+            //Dictionary<string, List<ChartPoint<long, double>>> points = new();
+            //points.Add("Market1Name", _currencyService.GetCurrencyPriceHistory("Market1Name"));
+            //points.Add("Market2Name", _currencyService.GetCurrencyPriceHistory("Market2Name"));
+            //points.Add("Market3Name", _currencyService.GetCurrencyPriceHistory("Market3Name"));
+
+            var points = await _currencyService.GetCurrencyPriceHistory(id);
 
             return Content(JsonConvert.SerializeObject(points));
         }
@@ -42,8 +44,8 @@ namespace TglCA.Mvc.PL.Controllers
         public IActionResult CoinChartGetCurrentValue(string id)
         {
             // TEST
-            ChartPoint<long, double> point = _currencyService.GetLatestPriceHistoryPoint(id);
-            return Content(JsonConvert.SerializeObject(point));
+            var currentPoints = _currencyService.GetByMarketId(id);
+            return Content(JsonConvert.SerializeObject(currentPoints));
         }
     }
 }

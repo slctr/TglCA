@@ -10,7 +10,9 @@ public interface ICurrencyService : IService<BllCurrency>
     Task<IEnumerable<BllCurrency>> GetAllByVolume();
     Task<Dictionary<string, BllCurrency>> GetByMarketId(string symbol);
     BllCurrency GetByCurrencyId(string currencyId);
+
     //TEST
-    //List<ChartPoint<long, double>> GetCurrencyPriceHistory(string currencyId);
-    //ChartPoint<long, double> GetLatestPriceHistoryPoint(string currencyId);
+    Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetCurrencyPriceHistory(string currencyId);
+
+    //Task<ChartPoint<long, decimal>> GetLatestPriceHistoryPoint(string currencyId);
 }

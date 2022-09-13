@@ -52,6 +52,6 @@ public class BllCurrency : BllEntityBase
 
     private decimal RoundPercentage(decimal input)
     {
-        return Math.Round(input, 1);
+        return Math.Round(input, 5);
     }
 }

@@ -66,10 +66,10 @@
 
             }
             function updateData() {
-                $.getJSON("/Coin/CoinChartGetCurrentValue/"+"@Model.Currency.CurrencyId", addData);
+                $.getJSON("/Coin/CoinChartGetCurrentValue/"+"@Model.Currency.Symbol", addData);
             }
             function getInitialData() {
-                $.getJSON("/Coin/CoinChartInitialValues/"+"@Model.Currency.CurrencyId", addInitialData);
+                $.getJSON("/Coin/CoinChartInitialValues/"+"@Model.Currency.Symbol", addInitialData);
             }
  
         }
@@ -83,7 +83,7 @@
             <div class="d-flex flex-row align-items-center mb-1 mt-1" id="coinInfoNameConteiner">
                 <img class="coinIconBig" src="@Model.Currency.Img"/>
                 <p class="m-0 fs-4" id="coinInfoName">
-                    <strong>@Model.Currency.Name (@Model.Currency.Symbol)</strong>
+                    <strong>@Model.Currency.AssetName (@Model.Currency.Symbol)</strong>
                 </p>
             </div>
             <div class="d-flex flex-row align-items-center" id="coinInfoPriceContainer">
@@ -109,7 +109,7 @@
     <div class="d-flex flex-column mt-2" id="coinInfoChartMainContainer">
         <div class="d-flex justify-content-center" id="coinInfoChartHeader">
             <p class="fs-4" id="chartHeaderText">
-                <strong>@Model.Currency.Name Price Chart (@Model.Currency.Symbol.ToUpper()/USD)</strong> 
+                <strong>@Model.Currency.AssetName Price Chart (@Model.Currency.Symbol.ToUpper()/USD)</strong> 
             </p>
         </div>
         <div id="chartContainer">
