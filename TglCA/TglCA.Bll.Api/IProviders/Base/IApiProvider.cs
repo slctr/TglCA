@@ -11,6 +11,8 @@ namespace TglCA.Bll.Api.IProviders.Base
 
         Task<IEnumerable<ChartPoint<long, decimal>>> GetHistoricalDataAsync(string symbol);
 
+        Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol);
+
         string GetProviderName();
     }
 }

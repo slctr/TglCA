@@ -97,5 +97,12 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
         {
             return bitfinexClient.SpotApi.CommonSpotClient.ExchangeName;
         }
+
+        public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
+        {
+            var currencyStats = await bitfinexClient.SpotApi.ExchangeData.GetTickerAsync("t" + symbol + QuoteAsset);
+
+            return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), currencyStats.Data.LastPrice);
+        }
     }
 }

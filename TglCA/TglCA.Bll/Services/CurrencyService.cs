@@ -65,36 +65,65 @@ public class CurrencyService : ICurrencyService
         Currency currency = _currencyMapper.ToCurrency(entity);
         _currencyRepository.CreateOrUpdate(currency);
     }
-    public BllCurrency GetByCurrencyId(string currencyId)
+    public async Task<BllCurrency> GetAverageByMarketId(string currencyId)
     {
-        Currency? currency = _currencyRepository.GetByCurrencyId(currencyId);
-        if (currency == null)
-        {
-            return null;
-        }
-        BllCurrency bllCurrency = _currencyMapper.ToBllCurrency(currency);
+        //Currency? currency = _currencyRepository.GetByCurrencyId(currencyId);
+        //if (currency == null)
+        //{
+        //    return null;
+        //}
+        //BllCurrency bllCurrency = _currencyMapper.ToBllCurrency(currency);
 
         /*
          Some API calls for bllCurrency
          */
 
-        return bllCurrency;
+        var result = await _coinAggregator.GetBllCurrency(currencyId);
+        if (result == null)
+        {
+            return null;
+        }
+
+        return result; ;
     }
 
     public async Task<IEnumerable<BllCurrency>> GetAllByVolume()
     {
         var result = await _coinAggregator.GetAggregatedCurrencies();
+        if (result == null)
+        {
+            return null;
+        }
         return result.OrderByDescending(x => x.Volume24hUsd);
     }
 
     public async Task<Dictionary<string, BllCurrency>> GetByMarketId(string id)
     {
-        return await _coinAggregator.GetAggregatedCurrency(id);
+        var result = await _coinAggregator.GetAggregatedCurrency(id);
+        if (result == null)
+        {
+            return null;
+        }
+        return result;
     }
 
     public async Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetCurrencyPriceHistory(string currencyId)
     {
         var result = await _coinAggregator.GetAggregatedChart(currencyId);
+        if (result == null)
+        {
+            return null;
+        }
+        return result;
+    }
+
+    public async Task<Dictionary<string, ChartPoint<long, decimal>>> GetLatestPriceHistoryPoint(string currencyId)
+    {
+        var result = await _coinAggregator.GetCurrentChartPoint(currencyId);
+        if (result == null)
+        {
+            return null;
+        }
         return result;
     }
 }

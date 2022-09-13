@@ -60,15 +60,36 @@ namespace TglCA.Bll.Api.Aggregator
                 tasks.Add(p.GetCurrencyAsync(symbol));
             }
 
-            var lists = await Task.WhenAll(tasks);
+            var list = await Task.WhenAll(tasks);
 
             var result = new Dictionary<string, BllCurrency>();
 
-            for (int i = 0; i < lists.Length; i++)
+            for (int i = 0; i < list.Length; i++)
             {
-                result.Add(providers[i].GetProviderName(), lists[i]);
+                result.Add(providers[i].GetProviderName(), list[i]);
             }
             return result;
+        }
+
+        public async Task<BllCurrency> GetBllCurrency(string symbol)
+        {
+            var tasks = new List<Task<BllCurrency>>();
+
+            foreach (var p in providers)
+            {
+                tasks.Add(p.GetCurrencyAsync(symbol));
+            }
+
+            var list = await Task.WhenAll(tasks);
+
+            return new BllCurrency()
+            {
+                Symbol = list.First().Symbol,
+                AssetName = list.First().AssetName,
+                Price = list.Average(x => x.Price),
+                PercentChange24h = list.Average(x => x.PercentChange24h),
+                Volume24hUsd = list.Average(x => x.Volume24hUsd)
+            };
         }
 
         public async Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetAggregatedChart(string symbol)
@@ -91,6 +112,24 @@ namespace TglCA.Bll.Api.Aggregator
             return result;
         }
 
+        public async Task<Dictionary<string, ChartPoint<long, decimal>>> GetCurrentChartPoint(string symbol)
+        {
+            var tasks = new List<Task<ChartPoint<long, decimal>>>();
 
+            foreach (var p in providers)
+            {
+                tasks.Add(p.GetChartPointAsync(symbol));
+            }
+
+            var list = await Task.WhenAll(tasks);
+
+            var result = new Dictionary<string, ChartPoint<long, decimal>>();
+
+            for (int i = 0; i < list.Length; i++)
+            {
+                result.Add(providers[i].GetProviderName(), list[i]);
+            }
+            return result;
+        }
     }
 }

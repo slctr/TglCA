@@ -94,5 +94,12 @@ namespace TglCA.Bll.Api.FTX.Provider
         {
             return ftxClient.TradeApi.CommonSpotClient.ExchangeName;
         }
+
+        public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
+        {
+            var currencyStats = await ftxClient.TradeApi.ExchangeData.GetSymbolAsync(symbol + "/" + QuoteAsset);
+
+            return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), (decimal)currencyStats.Data.CurrentPrice);
+        }
     }
 }

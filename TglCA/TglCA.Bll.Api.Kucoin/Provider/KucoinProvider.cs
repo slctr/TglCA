@@ -92,5 +92,12 @@ namespace TglCA.Bll.Api.Kucoin.Provider
         {
             return kucoinClient.SpotApi.CommonSpotClient.ExchangeName;
         }
+
+        public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
+        {
+            var currencyStats = await kucoinClient.SpotApi.ExchangeData.Get24HourStatsAsync(symbol + QuoteAsset);
+
+            return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), (decimal)currencyStats.Data.LastPrice);
+        }
     }
 }

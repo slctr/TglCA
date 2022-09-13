@@ -8,6 +8,8 @@ namespace TglCA.Bll.Api.Providers
 {
     public abstract class ApiProvider : IApiProvider
     {
+        public abstract Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol);
+
         public abstract Task<IEnumerable<BllCurrency>> GetCurrenciesAsync();
 
         public abstract Task<BllCurrency> GetCurrencyAsync(string symbol);
