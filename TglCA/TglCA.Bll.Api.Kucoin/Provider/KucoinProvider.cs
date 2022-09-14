@@ -84,7 +84,12 @@ namespace TglCA.Bll.Api.Kucoin.Provider
         {
             var chart = await kucoinClient.SpotApi.ExchangeData.GetKlinesAsync(symbol + QuoteAsset,
                 KlineInterval.OneMinute,
-                DateTime.Now.AddDays(-1));
+                DateTime.Now.AddHours(-5), DateTime.Now);
+
+            if (chart.Data == null)
+            {
+                return null;
+            }
 
             var result = chart.Data
                 .Select(x => new ChartPoint<long, decimal>(
@@ -102,6 +107,11 @@ namespace TglCA.Bll.Api.Kucoin.Provider
         public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
         {
             var currencyStats = await kucoinClient.SpotApi.ExchangeData.Get24HourStatsAsync(symbol + QuoteAsset);
+
+            if (currencyStats.Data.LastPrice == null)
+            {
+                return null;
+            }
 
             return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), (decimal)currencyStats.Data.LastPrice);
         }

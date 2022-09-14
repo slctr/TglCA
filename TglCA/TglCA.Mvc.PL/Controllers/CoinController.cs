@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TglCA.Bll.Interfaces.Entities;
-using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Mvc.PL.Models;
 using TglCA.Mvc.PL.Models.Mappers;
@@ -17,17 +16,32 @@ namespace TglCA.Mvc.PL.Controllers
             _currencyService = currencyService;
         }
 
-        [HttpGet("{Id}")]
-        public async ValueTask<IActionResult> CoinInfo(string id)
+        [HttpGet("{symbol}")]
+        public async ValueTask<IActionResult> CoinInfo(string symbol)
         {
-            BllCurrency bllCurrency = await _currencyService.GetAverageByMarketId(id);
+            BllCurrency bllCurrency = await _currencyService.GetAverageByMarketId(symbol);
             if (bllCurrency == null)
             {
-                return null;
+                return NotFound();
+            }
+
+            var currencyByMarket = await _currencyService.GetFromAllMarketsBySymbol(symbol);
+            List<MarketViewModel> markets = new List<MarketViewModel>();
+            foreach (var marketCurrency in currencyByMarket)
+            {
+                if (marketCurrency.Value != null)
+                {
+                    markets.Add(new MarketViewModel
+                    {
+                        Currency = marketCurrency.Value,
+                        Name = marketCurrency.Key
+                    });
+                }
             }
             CoinViewModel viewModel = new CoinViewModel()
             {
-                Currency = bllCurrency.ToViewModel()
+                Currency = bllCurrency.ToViewModel(),
+                Markets = markets.OrderByDescending(m => m.Currency.Volume24hUsd).ToList()
             };
             return View(viewModel);
         }
@@ -40,10 +54,10 @@ namespace TglCA.Mvc.PL.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult CoinChartGetCurrentValue(string id)
+        public async Task<IActionResult> CoinChartGetCurrentValue(string id)
         {
             // TEST
-            var currentPoints = _currencyService.GetByMarketId(id);
+            var currentPoints = await _currencyService.GetLatestPriceHistoryPoint(id);
             return Content(JsonConvert.SerializeObject(currentPoints));
         }
     }

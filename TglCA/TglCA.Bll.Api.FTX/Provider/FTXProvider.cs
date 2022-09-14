@@ -84,7 +84,12 @@ namespace TglCA.Bll.Api.FTX.Provider
         {
             var chart = await ftxClient.TradeApi.ExchangeData.GetKlinesAsync(symbol + "/" + QuoteAsset,
                 KlineInterval.OneMinute,
-                DateTime.Now.AddDays(-1));
+                DateTime.Now.AddHours(-5), DateTime.Now);
+
+            if (chart.Data == null)
+            {
+                return null;
+            }
 
             var result = chart.Data
                 .Select(x => new ChartPoint<long, decimal>(
@@ -104,6 +109,11 @@ namespace TglCA.Bll.Api.FTX.Provider
         public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
         {
             var currencyStats = await ftxClient.TradeApi.ExchangeData.GetSymbolAsync(symbol + "/" + QuoteAsset);
+
+            if (currencyStats.Data.CurrentPrice == null)
+            {
+                return null;
+            }
 
             return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), (decimal)currencyStats.Data.CurrentPrice);
         }

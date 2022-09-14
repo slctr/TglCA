@@ -130,7 +130,10 @@ namespace TglCA.Bll.Api.Aggregator
 
             for (int i = 0; i < list.Length; i++)
             {
-                result.Add(providers[i].GetProviderName(), list[i]);
+                if (list[i] != null)
+                {
+                    result.Add(providers[i].GetProviderName(), list[i]);
+                }
             }
             return result;
         }

@@ -89,8 +89,13 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
             var chart = await bitfinexClient.SpotApi.ExchangeData.GetKlinesAsync("t" + symbol + QuoteAsset,
                 KlineInterval.OneMinute,
                 null,
-                250,
-                DateTime.Now.AddDays(-1));
+                120,
+                DateTime.Now.AddHours(-5), DateTime.Now);
+
+            if (chart.Data == null)
+            {
+                return null;
+            }
 
             var result = chart.Data
                 .Select(x => new ChartPoint<long, decimal>(
@@ -108,6 +113,11 @@ namespace TglCA.Bll.Api.Bitfinex.Provider
         public override async Task<ChartPoint<long, decimal>> GetChartPointAsync(string symbol)
         {
             var currencyStats = await bitfinexClient.SpotApi.ExchangeData.GetTickerAsync("t" + symbol + QuoteAsset);
+
+            if (currencyStats.Data.LastPrice <= 0)
+            {
+                return null;
+            }
 
             return new ChartPoint<long, decimal>(DateTimeHelper.UnixTimestampNow(), currencyStats.Data.LastPrice);
         }

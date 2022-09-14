@@ -15,7 +15,7 @@ namespace TglCA.Utils
         /// <returns>The given DateTime in Unix timestamp format</returns>
         public static long ToUnixTimestamp(this DateTime value)
         {
-            return (long)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+            return (long)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace TglCA.Utils
         /// <returns>Now expressed as a Unix timestamp</returns>
         public static long UnixTimestampNow()
         {
-            return (long)Math.Truncate(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+            return (long)Math.Truncate(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds);
         }
     }
 }
