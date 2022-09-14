@@ -8,7 +8,6 @@ using TglCA.Bll.Services;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories;
-using TglCA.Dal.Mock.MockRepositories;
 using TglCA.Dal.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
