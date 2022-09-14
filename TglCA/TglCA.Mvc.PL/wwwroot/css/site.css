@@ -137,7 +137,9 @@ tr { border-bottom: #dee2e6 1px solid; }
 #chartContainer {
     min-width: 70vw;
     min-height: 30vh;
-    margin: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 #coinInfoCurrencyNamePrice {
     width: 80%;

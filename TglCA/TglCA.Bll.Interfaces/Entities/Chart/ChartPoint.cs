@@ -9,7 +9,7 @@ namespace TglCA.Bll.Interfaces.Entities.Chart
         [DataMember(Name = "x")]
         public Tx X { get; }
         [DataMember(Name = "y")]
-        public Ty Y { get; }
+        public Ty Y { get; set; }
 
         public ChartPoint(Tx x, Ty y)
         {

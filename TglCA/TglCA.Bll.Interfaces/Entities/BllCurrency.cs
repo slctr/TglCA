@@ -16,7 +16,7 @@ public class BllCurrency : BllEntityBase
         {
             if (_price >= 1)
             {
-                return Math.Round(_price, 3);
+                return Math.Round(_price, 2);
             }
             return Math.Round(_price, 8);
         }
@@ -37,7 +37,7 @@ public class BllCurrency : BllEntityBase
 
     public decimal Volume24hUsd
     {
-        get => Math.Round(_volume24hUsd, 3);
+        get => Math.Round(_volume24hUsd, 2);
         set => _volume24hUsd = value;
     }
 
