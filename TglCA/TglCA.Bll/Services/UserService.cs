@@ -4,7 +4,9 @@ using System.Security.Claims;
 using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.BllModels;
 using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Bll.Interfaces.Interfaces.EmailService;
 using TglCA.Dal.Interfaces.Entities.Identity;
+using TglCA.Utils;
 
 namespace TglCA.Bll.Services
 {
@@ -12,6 +14,7 @@ namespace TglCA.Bll.Services
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IEmailService _emailService;
 
         public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -69,6 +72,17 @@ namespace TglCA.Bll.Services
             if (!result.Succeeded)
             {
                 var errorModel = new ErrorModel();
+                if (result.IsNotAllowed)
+                {
+                    errorModel.ErrorDetails = new List<ErrorDetail>()
+                    {
+                        new ErrorDetail()
+                        {
+                            ErrorMessage = "SignIn failure: Email is not confirmed"
+                        }
+                    };
+                    return errorModel;
+                }
                 errorModel.ErrorDetails = new List<ErrorDetail>()
                 {
                      new ErrorDetail()
@@ -145,9 +159,36 @@ namespace TglCA.Bll.Services
 
             identityResult = await _userManager.AddLoginAsync(user, info);
 
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            await _userManager.ConfirmEmailAsync(user, token);
+
             await _signInManager.SignInAsync(user, isPersistent: false);
 
             return ErrorModel.CreateSuccess();
+        }
+
+        public async ValueTask<string> CreateConfirmationTokenAsync(BllUserModel user)
+        {
+            User userToConfirm = await _userManager.FindByEmailAsync(user.Email);
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(userToConfirm);
+            return Base64EncodeHelper.Base64Encode(token);
+        }
+
+        public async ValueTask<IdentityResult> ConfirmEmailByUserNameAsync(string userName, string token)
+        {
+            User user = await _userManager.FindByNameAsync(userName);
+            string decodedToken = Base64EncodeHelper.Base64Decode(token);
+            return await _userManager.ConfirmEmailAsync(user, decodedToken);
+        }
+
+        public async ValueTask<BllUserModel> GetUserByName(string name)
+        {
+            var user = await _userManager.FindByNameAsync(name);
+            BllUserModel bllUser = new()
+            {
+                Email = user.Email
+            };
+            return bllUser;
         }
     }
 }

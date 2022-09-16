@@ -1,1 +1,8 @@
-﻿<h1 class="text-success">Your account has been successfully registered</h1>
+﻿@model TglCA.Bll.Interfaces.Entities.BllModels.BllUserModel;
+
+<div class="d-flex flex-column justify-content-around align-items-center" style="min-width: 50vh; padding: 2rem;">
+    <h1 class="text-success">Your account has been successfully registered</h1>
+    <p>An email has been sent to your email address "@Model.Email" with a link to verify your account</p>
+    <p>Please confirm your email to login.</p>
+    @Html.ActionLink("To main page", "All", "Main", null, new {@class = "navButton"})
+</div>

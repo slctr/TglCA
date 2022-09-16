@@ -144,3 +144,8 @@ tr { border-bottom: #dee2e6 1px solid; }
 #coinInfoCurrencyNamePrice {
     width: 80%;
 }
+#registerMainContainer {
+    min-width: 40vw;
+    min-height: 60vh;
+    justify-content: space-between;
+}

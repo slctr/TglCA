@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using TglCA.Bll.Api.Aggregator;
 using TglCA.Bll.Api.Aggregator.Interfaces;
 using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Bll.Interfaces.Interfaces.EmailService;
 using TglCA.Bll.Mappers;
 using TglCA.Bll.Services;
+using TglCA.Bll.Services.Mail;
 using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories;
@@ -54,7 +56,8 @@ builder.Services.AddIdentity<User, Role>(options =>
 
         #endregion
     })
-    .AddEntityFrameworkStores<MainDbContext>();
+    .AddEntityFrameworkStores<MainDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     {
         googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
@@ -66,6 +69,10 @@ builder.Services.AddTransient<ICoinAggregator, CoinAggregator>();
 builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 builder.Services.AddTransient<ICurrencyMapper, CurrencyMapper>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IEmailService>(s => 
+    new MailKitEmailService(
+        builder.Configuration["Authentication:Google:MailService:Email"],
+        builder.Configuration["Authentication:Google:MailService:Password"]));
 
 #endregion
 

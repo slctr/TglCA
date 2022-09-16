@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
   </ItemGroup>
 
@@ -15,6 +16,7 @@
     <ProjectReference Include="..\TglCA.Bll.Api\TglCA.Bll.Api.csproj" />
     <ProjectReference Include="..\TglCA.Bll.Interfaces\TglCA.Bll.Interfaces.csproj" />
     <ProjectReference Include="..\TglCA.Dal.Interfaces\TglCA.Dal.Interfaces.csproj" />
+    <ProjectReference Include="..\TglCA.Utils\TglCA.Utils.csproj" />
   </ItemGroup>
 
 </Project>
