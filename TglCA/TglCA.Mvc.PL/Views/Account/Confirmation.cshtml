@@ -1,0 +1,7 @@
+﻿@model TglCA.Bll.Interfaces.Entities.BllModels.BllUserModel;
+
+<div class="d-flex flex-column justify-content-around align-items-center" style="min-width: 50vh; padding: 2rem;">
+    <h1 class="text-success">Your email has been successfully confirmed</h1>
+    <p>Congratulations @Model.UserName, you can now log into your account</p>
+    @Html.ActionLink("Login", "Login", "Account", null, new {@class = "navButton"})
+</div>

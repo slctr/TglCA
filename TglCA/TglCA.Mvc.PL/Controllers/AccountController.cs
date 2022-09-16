@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net.Mail;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.BllModels;
 using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Bll.Interfaces.Interfaces.EmailService;
 using TglCA.Mvc.PL.Models;
 
 namespace TglCA.Mvc.PL.Controllers;
@@ -11,16 +13,18 @@ namespace TglCA.Mvc.PL.Controllers;
 public class AccountController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IEmailService _emailService;
 
-    public AccountController(IUserService userUservice)
+    public AccountController(IUserService userUservice, IEmailService emailService)
     {
         _userService = userUservice;
+        _emailService = emailService;
     }
 
     [HttpGet]
-    public IActionResult Successful()
+    public IActionResult Successful(BllUserModel model)
     {
-        return View();
+        return View(model);
     }
 
     [HttpGet]
@@ -44,19 +48,45 @@ public class AccountController : Controller
             return View(userInputModel);
         }
 
-        var errModel = await _userService.CreateAsync(new BllUserModel()
+        BllUserModel userModel = new BllUserModel()
         {
             Email = userInputModel.Email,
             Password = userInputModel.Password
-        });
+        };
 
+        var errModel = await _userService.CreateAsync(userModel);
         if (!errModel.IsSuccess)
         {
             AddModelStateErrors(errModel);
             return View(userInputModel);
         }
 
-        return RedirectToAction(nameof(Successful));
+        var token = await _userService.CreateConfirmationTokenAsync(userModel);
+
+        var confirmationEndpoint = Url.Action(
+            "Confirmation",
+            "Account",
+            values: new { userName = userModel.UserName, token = token },
+            protocol: Request.Scheme
+        );
+
+        await _emailService.SendConfirmationMessage(new MailAddress(userModel.Email, userModel.UserName), confirmationEndpoint);
+
+        return RedirectToAction(nameof(Successful), userModel);
+    }
+    
+    [HttpGet("{userName}/{token}")]
+    public async ValueTask<IActionResult> Confirmation(string userName, string token)
+    {
+        var result = await _userService.ConfirmEmailByUserNameAsync(userName, token);
+        var user = await _userService.GetUserByName(userName);
+        
+        if (result.Succeeded && user != null)
+        {
+            return View(user);
+        }
+
+        return View("Error");
     }
 
     [HttpGet]
@@ -114,7 +144,6 @@ public class AccountController : Controller
 
         return RedirectToAction("All", "Main");
     }
-
     private void AddModelStateErrors(ErrorModel errorModel)
     {
         foreach (var item in errorModel.ErrorDetails)
