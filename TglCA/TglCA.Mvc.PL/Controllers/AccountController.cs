@@ -195,6 +195,10 @@ public class AccountController : Controller
     [HttpGet("{symbol}")]
     public async Task<IActionResult> IsSubscribed(string symbol)
     {
+        if (!User.Claims.Any())
+        {
+            return Json(new { status = "Unauthorized" });
+        }
         var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
         var result = await _userService.IsSubscribed(userId, symbol);

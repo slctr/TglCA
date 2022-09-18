@@ -87,6 +87,10 @@ public class CurrencyService : ICurrencyService
     public async Task<Dictionary<string, IEnumerable<ChartPoint<long, decimal>>>> GetCurrencyPriceHistory(string currencyId)
     {
         var result = await _coinAggregator.GetAggregatedChart(currencyId);
+        if (result == null)
+        {
+            return null;
+        }
         return result.Where(r => r.Value != null && r.Value.Any())
             .ToDictionary(r => r.Key, r => r.Value);
     }

@@ -149,3 +149,7 @@ tr { border-bottom: #dee2e6 1px solid; }
     min-height: 60vh;
     justify-content: space-between;
 }
+.inactiveLink {
+    pointer-events: none;
+    cursor: default;
+}
