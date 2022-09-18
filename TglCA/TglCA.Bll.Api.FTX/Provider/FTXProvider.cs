@@ -65,7 +65,8 @@ namespace TglCA.Bll.Api.FTX.Provider
             var currencyStats = task2.Result;
 
             if (currencyName == null ||
-                currencyStats.Data == null)
+                currencyStats.Data == null ||
+                currencyStats.Data.CurrentPrice == null)
             {
                 return null;
             }
