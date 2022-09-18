@@ -17,6 +17,7 @@
     <ProjectReference Include="..\TglCA.Bll.Interfaces\TglCA.Bll.Interfaces.csproj" />
     <ProjectReference Include="..\TglCA.Dal.Interfaces\TglCA.Dal.Interfaces.csproj" />
     <ProjectReference Include="..\TglCA.Utils\TglCA.Utils.csproj" />
+    <ProjectReference Include="..\TglCA.Dal\TglCA.Dal.csproj" />
   </ItemGroup>
 
 </Project>

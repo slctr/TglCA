@@ -1,10 +1,11 @@
 ﻿using TglCA.Dal.Interfaces.Entities;
+using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories.IBase;
 
 namespace TglCA.Dal.Interfaces.IRepositories;
 
 public interface ICurrencyRepository : IRepository<Currency>
 {
-    void CreateOrUpdate(Currency entity);
-    Currency? GetByCurrencyId(string currencyId);
+    Task CreateOrUpdateAsync(Currency entity);
+    Currency? GetBySymbol(string currencyId);
 }

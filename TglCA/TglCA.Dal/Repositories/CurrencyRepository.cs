@@ -1,28 +1,29 @@
 ﻿using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities;
+using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories;
 using TglCA.Dal.Repositories.Base;
 
 namespace TglCA.Dal.Repositories;
 
-public class CurrencyRepository : RepositoryBase<Currency>,ICurrencyRepository
+public class CurrencyRepository : RepositoryBase<Currency>, ICurrencyRepository
 {
     public CurrencyRepository(MainDbContext context) : base(context)
     {
     }
-    public void CreateOrUpdate(Currency entity)
+    public async Task CreateOrUpdateAsync(Currency entity)
     {
         Currency? currency = _dbSet.FirstOrDefault(c => c.Symbol == entity.Symbol);
         if (currency == null)
         {
-            Create(entity);
+            await CreateAsync(entity);
             return;
         }
-        Update(entity);
     }
 
-    public Currency? GetByCurrencyId(string currencyId)
+    public Currency? GetBySymbol(string symbol)
     {
-        return _dbSet.FirstOrDefault(c => c.Symbol == currencyId);
+        return _dbSet.FirstOrDefault(c => c.Symbol == symbol);
     }
+
 }

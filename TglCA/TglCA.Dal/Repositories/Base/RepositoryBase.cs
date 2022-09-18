@@ -15,14 +15,22 @@ namespace TglCA.Dal.Repositories.Base
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(T entity)
+        public async Task CreateRange(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll()
@@ -35,7 +43,7 @@ namespace TglCA.Dal.Repositories.Base
             return _dbSet.IgnoreQueryFilters();
         }
 
-        public void SafeDelete(T entity)
+        public async Task SafeDeleteAsync(T entity)
         {
             T? tEntity = GetById(entity.Id);
             if (tEntity == null)
@@ -43,7 +51,7 @@ namespace TglCA.Dal.Repositories.Base
                 return;
             }
             tEntity.IsDeleted = true;
-            Update(tEntity);
+            await UpdateAsync(tEntity);
         }
 
         public T? GetById(int id)
@@ -51,9 +59,10 @@ namespace TglCA.Dal.Repositories.Base
             return _dbSet.Find(id);
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

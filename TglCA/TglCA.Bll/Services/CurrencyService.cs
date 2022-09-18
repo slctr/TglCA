@@ -20,39 +20,32 @@ public class CurrencyService : ICurrencyService
         _coinAggregator = aggregator;
     }
 
-    public void Create(BllCurrency entity)
+    public async Task CreateAsync(BllCurrency entity)
     {
         Currency currency = _currencyMapper.ToCurrency(entity);
-        _currencyRepository.Create(currency);
+        await _currencyRepository.CreateAsync(currency);
     }
 
-    public void Update(BllCurrency entity)
+    public async Task UpdateAsync(BllCurrency entity)
     {
         Currency currency = _currencyMapper.ToCurrency(entity);
-        _currencyRepository.Update(currency);
+        await _currencyRepository.UpdateAsync(currency);
     }
 
-    public void Delete(BllCurrency entity)
+    public async Task DeleteAsync(BllCurrency entity)
     {
         Currency currency = _currencyMapper.ToCurrency(entity);
-        _currencyRepository.SafeDelete(currency);
+        await _currencyRepository.SafeDeleteAsync(currency);
     }
 
-    public BllCurrency GetById(int id)
+    public Currency GetBySymbol(string symbol)
     {
-        Currency? currency = _currencyRepository.GetById(id);
+        Currency? currency = _currencyRepository.GetBySymbol(symbol);
         if (currency == null)
         {
             return null;
         }
-
-        BllCurrency bllCurrency = _currencyMapper.ToBllCurrency(currency);
-
-        /*
-         Some API calls for bllCurrency
-         */
-
-        return bllCurrency;
+        return currency;
     }
 
     public async Task<IEnumerable<BllCurrency>> GetAllAsync()
@@ -60,11 +53,6 @@ public class CurrencyService : ICurrencyService
         return await _coinAggregator.GetAggregatedCurrencies();
     }
 
-    public void CreateOrUpdate(BllCurrency entity)
-    {
-        Currency currency = _currencyMapper.ToCurrency(entity);
-        _currencyRepository.CreateOrUpdate(currency);
-    }
     public async Task<BllCurrency> GetAverageByMarketId(string currencyId)
     {
         var result = await _coinAggregator.GetBllCurrency(currencyId);
@@ -73,7 +61,7 @@ public class CurrencyService : ICurrencyService
             return null;
         }
 
-        return result; ;
+        return result;
     }
 
     public async Task<IEnumerable<BllCurrency>> GetAllByVolume()
@@ -83,6 +71,9 @@ public class CurrencyService : ICurrencyService
         {
             return null;
         }
+
+        //await UpdateDatabase();
+
         return result.OrderByDescending(x => x.Volume24hUsd);
     }
 
@@ -108,5 +99,22 @@ public class CurrencyService : ICurrencyService
             return null;
         }
         return result;
+    }
+
+    public async Task InitialiseDB()
+    {
+        var result = await _coinAggregator.GetAggregatedCurrencies();
+        var coinList = result.Select(x => _currencyMapper.ToCurrency(x));
+        await _currencyRepository.CreateRange(coinList);
+    }
+
+    public async Task UpdateDatabase()
+    {
+        var coins = await _coinAggregator.GetAggregatedCurrencies();
+        var currencies = coins.Select(x => _currencyMapper.ToCurrency(x));
+        foreach (var c in currencies)
+        {
+            await _currencyRepository.CreateOrUpdateAsync(c);
+        }
     }
 }

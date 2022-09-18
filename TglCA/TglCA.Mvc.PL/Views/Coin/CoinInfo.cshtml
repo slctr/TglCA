@@ -1,4 +1,5 @@
 ﻿@model TglCA.Mvc.PL.Models.CoinViewModel;
+
 @section Head {
     <script>
         window.onload = function () {
@@ -58,10 +59,10 @@
                         dataPoints: dataPoints[2]
                     }]
             });
- 
+
             chart.render();
             getInitialData();
-            
+            isSubscribed();
             function addData(data) {
                 
                 var j = 0;
@@ -98,12 +99,26 @@
                 chart.render();
             }
             function updateData() {
-                $.getJSON("/Coin/CoinChartGetCurrentValue/"+"@Model.Currency.Symbol", addData);
+                $.getJSON("/Coin/CoinChartGetCurrentValue/" + "@Model.Currency.Symbol", addData);
             }
+
             function getInitialData() {
-                $.getJSON("/Coin/CoinChartInitialValues/"+"@Model.Currency.Symbol", addInitialData);
+                $.getJSON("/Coin/CoinChartInitialValues/" + "@Model.Currency.Symbol", addInitialData);
             }
- 
+
+            function isSubscribed() {
+                $.getJSON("/Account/IsSubscribed/" + "@Model.Currency.Symbol", function(data) {
+                    var btn = document.getElementById("subscribeButton");
+                    if (data.status) {
+                        btn.classList.add("btn-outline-danger");
+                        btn.innerText = "Unsubscribe";
+                    }
+                    else {
+                        btn.classList.add("btn-outline-success");
+                        btn.innerText = "Subscribe";
+                    }
+                })
+            }
         }
     </script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
@@ -133,7 +148,7 @@
             </div>
             <div class="d-flex" id="coinInfoButtonsContainer">
                 <div id="coinInfoSubscribeButtonContainer">
-                    @Html.ActionLink("Subscribe", "Subscribe", "Account", null, new { @class = "btn btn-outline-success" })
+                    <a id="subscribeButton" class="btn btn-outline-secondary" asp-controller="Account" asp-action="Subscribe" asp-route-symbol="@Model.Currency.Symbol">Subscribe</a>
                 </div>
             </div>
         </div>

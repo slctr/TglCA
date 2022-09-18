@@ -56,7 +56,6 @@ namespace TglCA.Mvc.PL.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> CoinChartGetCurrentValue(string id)
         {
-            // TEST
             var currentPoints = await _currencyService.GetLatestPriceHistoryPoint(id);
             return Content(JsonConvert.SerializeObject(currentPoints));
         }

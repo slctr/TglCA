@@ -4,9 +4,8 @@ namespace TglCA.Bll.Interfaces.IServices.Base;
 
 public interface IService<T> where T : BllEntityBase
 {
-    void Create(T entity);
-    void Update(T entity);
-    void Delete(T entity);
-    T GetById(int id);
+    Task CreateAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
     Task<IEnumerable<T>> GetAllAsync();
 }
