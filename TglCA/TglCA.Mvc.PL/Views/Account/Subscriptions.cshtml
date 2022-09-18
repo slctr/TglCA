@@ -2,9 +2,9 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IPagedList<CurrencyViewModel>
 <div class="align-self-center" id="infoContainer">
-    <h3 class="mt-1">Cryptocurrencies</h3>
+    <h3 class="mt-1">Subscriptions</h3>
 </div>
 <partial name="Partials/Coins/_BasicCoinsTablePartial" model="@Model"/>
-@Html.PagedListPager(Model, page => Url.Action("All",
+@Html.PagedListPager(Model, page => Url.Action("Subscriptions",
     new { page }),
     PagedListOptions.options)

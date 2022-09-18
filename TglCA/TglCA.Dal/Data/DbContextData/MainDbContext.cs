@@ -39,6 +39,10 @@ public class MainDbContext : IdentityDbContext<User, Role, int, UserClaim, UserR
             .ToTable("RoleClaims");
 
         modelBuilder.Entity<Currency>()
+            .ToTable("Currencies")
             .HasQueryFilter(c => !c.IsDeleted);
+        modelBuilder.Entity<User>()
+            .HasMany(t => t.Currencies)
+            .WithMany(p => p.Users);
     }
 }

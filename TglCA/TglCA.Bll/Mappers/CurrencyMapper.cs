@@ -11,7 +11,6 @@ public class CurrencyMapper : ICurrencyMapper
         return new BllCurrency
         {
             Id = currency.Id,
-            AssetName = currency.Name,
             Symbol = currency.Symbol
         };
     }
@@ -21,7 +20,6 @@ public class CurrencyMapper : ICurrencyMapper
         return new Currency
         {
             Id = bllCurrency.Id,
-            Name = bllCurrency.AssetName,
             Symbol = bllCurrency.Symbol
         };
     }

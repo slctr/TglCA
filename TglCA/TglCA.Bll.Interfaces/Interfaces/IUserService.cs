@@ -11,5 +11,8 @@ namespace TglCA.Bll.Interfaces.Interfaces
         Task SignOutAsync();
         AuthenticationProperties GetAuthenticationProperties(string provider, string redirectUrl);
         ValueTask<ErrorModel> GoogleResponse();
+        ValueTask<ErrorModel> CoinSubscribe(string userId, string symbol);
+        ValueTask<IEnumerable<BllCurrency>> GetSubscriptions(string userId);
+        ValueTask<bool> IsSubscribed(string userId, string symbol);
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.BllModels;
 using TglCA.Bll.Interfaces.Interfaces;
+using TglCA.Dal.Data.DbContextData;
+using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.Entities.Identity;
+
 
 namespace TglCA.Bll.Services
 {
@@ -12,11 +16,19 @@ namespace TglCA.Bll.Services
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly ICurrencyService _currencyService;
+        private readonly MainDbContext _context;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager)
+
+        public UserService(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ICurrencyService service,
+            MainDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _currencyService = service;
+            _context = context;
         }
 
         public async ValueTask<ErrorModel> CreateAsync(BllUserModel userModel)
@@ -148,6 +160,94 @@ namespace TglCA.Bll.Services
             await _signInManager.SignInAsync(user, isPersistent: false);
 
             return ErrorModel.CreateSuccess();
+        }
+
+        public async ValueTask<ErrorModel> CoinSubscribe(string userId, string symbol)
+        {
+            var user = await _context.Users
+                .Include(x => x.Currencies)
+                .SingleOrDefaultAsync(x => x.Id == int.Parse(userId)); ;
+
+            if (user == null)
+            {
+                var errorModel = new ErrorModel();
+                errorModel.ErrorDetails = new List<ErrorDetail>()
+                {
+                     new ErrorDetail()
+                     {
+                         ErrorMessage = "Something went wrong!"
+                     }
+                };
+                return errorModel;
+            }
+
+            user.Currencies = user.Currencies.Any(x => x.Symbol == symbol)
+                ? user.Currencies.Where(c => c.Symbol != symbol).ToList()
+                : user.Currencies.Append(_currencyService.GetBySymbol(symbol));
+
+            await _userManager.UpdateAsync(user);
+            
+            return ErrorModel.CreateSuccess();
+        }
+        
+        ////public async ValueTask<ErrorModel> CoinUnSubscribe(string userId, string symbol)
+        ////{
+        ////    var user = await _context.Users
+        ////        .Include(x => x.Currencies)
+        ////        .SingleOrDefaultAsync(x => x.Id == int.Parse(userId));
+
+        ////    if (user == null ||
+        ////        user.Currencies.Any(x => x.Symbol == symbol))
+        ////    {
+        ////        var errorModel = new ErrorModel();
+        ////        errorModel.ErrorDetails = new List<ErrorDetail>()
+        ////        {
+        ////             new ErrorDetail()
+        ////             {
+        ////                 ErrorMessage = "Something went wrong!"
+        ////             }
+        ////        };
+        ////        return errorModel;
+        ////    }
+
+        //    user.Currencies = user.Currencies.Where(c => c.Symbol != symbol).ToList();
+        //    await _userManager.UpdateAsync(user);
+
+        //    return ErrorModel.CreateSuccess();
+        //}
+
+        public async ValueTask<IEnumerable<BllCurrency>> GetSubscriptions(string userId)
+        {
+            var user = await _context.Users
+                .Include(x => x.Currencies)
+                .SingleOrDefaultAsync(x => x.Id == int.Parse(userId));
+
+            if (user == null || user.Currencies == null)
+            {
+                return null;
+            }
+
+            var coins = await _currencyService.GetAllByVolume();
+
+            coins = from x in coins
+                    join y in user.Currencies on x.Symbol equals y.Symbol
+                    select x;
+
+            return coins;
+        }
+
+        public async ValueTask<bool> IsSubscribed(string userId, string symbol)
+        {
+            var user = await _context.Users
+                .Include(x => x.Currencies)
+                .SingleOrDefaultAsync(x => x.Id == int.Parse(userId));
+
+            if (user == null || user.Currencies == null)
+            {
+                return false;
+            }
+
+            return user.Currencies.Any(x => x.Symbol == symbol);
         }
     }
 }

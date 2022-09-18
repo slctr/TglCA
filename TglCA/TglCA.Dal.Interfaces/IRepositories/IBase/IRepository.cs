@@ -4,11 +4,12 @@ namespace TglCA.Dal.Interfaces.IRepositories.IBase;
 
 public interface IRepository<T> where T : BaseEntity, new()
 {
-    void Create(T entity);
-    void Update(T entity);
-    void Delete(T entity);
+    Task CreateAsync(T entity);
+    Task CreateRange(IEnumerable<T> entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
     T? GetById(int id);
     IEnumerable<T> GetAll();
     IEnumerable<T> GetAllWithoutQueryFilters();
-    void SafeDelete(T entity);
+    Task SafeDeleteAsync(T entity);
 }

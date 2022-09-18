@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TglCA.Bll.Interfaces.Entities;
-using TglCA.Bll.Interfaces.Entities.Chart;
 using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Mvc.PL.Models;
 using TglCA.Mvc.PL.Models.Mappers;
@@ -42,7 +41,6 @@ namespace TglCA.Mvc.PL.Controllers
         [HttpGet("{id}")]
         public IActionResult CoinChartGetCurrentValue(string id)
         {
-            // TEST
             var currentPoints = _currencyService.GetByMarketId(id);
             return Content(JsonConvert.SerializeObject(currentPoints));
         }
