@@ -109,7 +109,10 @@
             function isSubscribed() {
                 $.getJSON("/Account/IsSubscribed/" + "@Model.Currency.Symbol", function(data) {
                     var btn = document.getElementById("subscribeButton");
-                    if (data.status) {
+                    if (data.status == "Unauthorized") {
+                        btn.classList.add("inactiveLink");
+                    }
+                    else if (data.status) {
                         btn.classList.add("btn-outline-danger");
                         btn.innerText = "Unsubscribe";
                     }
