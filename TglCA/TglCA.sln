@@ -19,10 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Dal.Interfaces", "Tgl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api", "TglCA.Bll.Api\TglCA.Bll.Api.csproj", "{0738863E-8477-4D1D-9C33-B54716F10977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Tests", "TglCA.Bll.Tests\TglCA.Bll.Tests.csproj", "{2CFF6EFC-FE0A-43C7-A450-622C41C4998D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Dal.Tests", "TglCA.Dal.Tests\TglCA.Dal.Tests.csproj", "{2C6AA252-C1ED-4471-8778-2F73B1DF8865}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Aggregator.Interfaces", "TglCA.Bll.Api.Aggregator.Interfaces\TglCA.Bll.Api.Aggregator.Interfaces.csproj", "{558849DD-4ECF-4B25-9D8F-0983BA843564}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Aggregator", "TglCA.Bll.Api.Aggregator\TglCA.Bll.Api.Aggregator.csproj", "{7FB33B1F-DE7E-4D44-A285-85EAF40D2175}"
@@ -41,7 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Bitfinex", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Bll.Api.Kucoin", "TglCA.Bll.Api.Kucoin\TglCA.Bll.Api.Kucoin.csproj", "{1B8F3FC3-8E59-4CD1-B932-F1F781321FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TglCA.Utils", "TglCA.Utils\TglCA.Utils.csproj", "{2F37616F-B0E6-4CD0-9A39-AA58F9DBB8EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TglCA.Utils", "TglCA.Utils\TglCA.Utils.csproj", "{2F37616F-B0E6-4CD0-9A39-AA58F9DBB8EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TglCA.Bll.Tests", "TglCA.Bll.Tests\TglCA.Bll.Tests.csproj", "{6A071E48-8221-4961-8FEA-E48AA129C1B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,14 +71,6 @@ Global
 		{0738863E-8477-4D1D-9C33-B54716F10977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0738863E-8477-4D1D-9C33-B54716F10977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0738863E-8477-4D1D-9C33-B54716F10977}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CFF6EFC-FE0A-43C7-A450-622C41C4998D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CFF6EFC-FE0A-43C7-A450-622C41C4998D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CFF6EFC-FE0A-43C7-A450-622C41C4998D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CFF6EFC-FE0A-43C7-A450-622C41C4998D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C6AA252-C1ED-4471-8778-2F73B1DF8865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C6AA252-C1ED-4471-8778-2F73B1DF8865}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C6AA252-C1ED-4471-8778-2F73B1DF8865}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C6AA252-C1ED-4471-8778-2F73B1DF8865}.Release|Any CPU.Build.0 = Release|Any CPU
 		{558849DD-4ECF-4B25-9D8F-0983BA843564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{558849DD-4ECF-4B25-9D8F-0983BA843564}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{558849DD-4ECF-4B25-9D8F-0983BA843564}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,6 +95,10 @@ Global
 		{2F37616F-B0E6-4CD0-9A39-AA58F9DBB8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F37616F-B0E6-4CD0-9A39-AA58F9DBB8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F37616F-B0E6-4CD0-9A39-AA58F9DBB8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A071E48-8221-4961-8FEA-E48AA129C1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A071E48-8221-4961-8FEA-E48AA129C1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A071E48-8221-4961-8FEA-E48AA129C1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A071E48-8221-4961-8FEA-E48AA129C1B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
