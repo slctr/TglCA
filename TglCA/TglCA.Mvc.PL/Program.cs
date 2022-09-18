@@ -74,6 +74,7 @@ builder.Services.AddTransient<IEmailService>(s =>
         builder.Configuration["Authentication:Google:MailService:Email"],
         builder.Configuration["Authentication:Google:MailService:Password"]));
 
+
 #endregion
 
 
