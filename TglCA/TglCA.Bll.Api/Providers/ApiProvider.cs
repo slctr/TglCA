@@ -1,6 +1,4 @@
-﻿using CryptoExchange.Net;
-using CryptoExchange.Net.Interfaces;
-using TglCA.Bll.Api.IProviders.Base;
+﻿using TglCA.Bll.Api.IProviders.Base;
 using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.Chart;
 

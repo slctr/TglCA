@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TglCA.Bll.Interfaces.Entities.Chart;
-
-namespace TglCA.Mvc.PL.Models
+﻿namespace TglCA.Mvc.PL.Models
 {
     public record CoinViewModel
     {

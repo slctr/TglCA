@@ -1,6 +1,6 @@
 ﻿using TglCA.Bll.Interfaces.Entities;
 using TglCA.Bll.Interfaces.Entities.Chart;
-using TglCA.Bll.Interfaces.IServices.Base;
+using TglCA.Bll.Interfaces.Interfaces.IServices.Base;
 using TglCA.Dal.Interfaces.Entities;
 
 namespace TglCA.Bll.Interfaces.Interfaces;

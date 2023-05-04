@@ -1,5 +1,4 @@
 ﻿using TglCA.Dal.Interfaces.Entities;
-using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories.IBase;
 
 namespace TglCA.Dal.Interfaces.IRepositories;

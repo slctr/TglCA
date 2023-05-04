@@ -7,7 +7,6 @@ using TglCA.Bll.Interfaces.Entities.BllModels;
 using TglCA.Bll.Interfaces.Interfaces;
 using TglCA.Bll.Interfaces.Interfaces.EmailService;
 using TglCA.Dal.Data.DbContextData;
-using TglCA.Dal.Interfaces.Entities;
 using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Utils;
 

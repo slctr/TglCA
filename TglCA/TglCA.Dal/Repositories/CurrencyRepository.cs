@@ -1,6 +1,5 @@
 ﻿using TglCA.Dal.Data.DbContextData;
 using TglCA.Dal.Interfaces.Entities;
-using TglCA.Dal.Interfaces.Entities.Identity;
 using TglCA.Dal.Interfaces.IRepositories;
 using TglCA.Dal.Repositories.Base;
 
